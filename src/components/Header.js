@@ -25,9 +25,7 @@ class Header extends Component {
                         </Navbar.Collapse>
                         </Navbar>
                     </Col>
-                    <Col>
-                        <OnlineStatus />
-                    </Col>
+                   
                 </Row>
             </div>
         );

@@ -59,7 +59,7 @@ class OnlineStatus extends React.Component {
             console.log(error);
           }
         )
-      }, 60000)
+      }, 600000)
     }
   
     render() {

@@ -12,6 +12,7 @@ import {
 
 import Home from './pages/Home';
 import Stats from './pages/Stats';
+import Search from './pages/Search';
 import NotFound from './pages/NotFound';
 import About from './pages/About';
 
@@ -24,6 +25,7 @@ function App() {
               <Route exact path="/" component={Home} />
               <Route path="/stats/:platform/:username" component={Stats} />
               <Route path='/about' component={About}/>
+              <Route path='/search' component={Search}/>
               <Route path='/404' component={NotFound}/>
               <Route render={() => (
                 <Redirect to="/404"/>

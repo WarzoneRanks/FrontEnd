@@ -429,6 +429,44 @@ h1.sub.pad {
   border-color: #2c333a !important;
 }
 
+.logoText {
+  position: absolute;
+  left: 30px;
+  z-index: 2;
+}
+
+a {
+  color: #fff;
+}
+
+a:hover {
+  text-decoration: none !important;
+  color: #fff !important;
+}
+
+.navLinks {
+  text-align: center;
+  margin: auto;
+}
+
+.navbar {
+  z-index: 1;
+}
+
+.makeFavorite {
+  font-size: 16px;
+  background: transparent;
+  border: 1px solid #eb13ef;
+  padding: 5px;
+  border-radius: 5px;
+  margin: 5px;
+  cursor: pointer;
+}
+
+.fav-true {
+  background: #eb13ef;
+}
+
 @media only screen and (max-width: 770px) {
 
   .searchBoxContainer {

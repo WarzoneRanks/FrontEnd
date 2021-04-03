@@ -31,11 +31,22 @@ class Stats extends Component {
           },
           matches: null,
           isLoading: true,
-          error: null
+          error: null,
+          isFavorite: null
         };
     }
 
     updateStats() {
+        if (localStorage.getItem("favoriteUser") != null) {
+          let cachedUser = JSON.parse(localStorage.getItem("favoriteUser"));
+          if (this.props.match.params.username == cachedUser.username && this.props.match.params.platform == cachedUser.platform) {
+            this.setState({isFavorite: true});
+            console.log('is favorite');
+          } else {
+            this.setState({isFavorite: false});
+            console.log('is not favorite');
+          }
+        }
         fetch("https://wzapi.parkersmith.io/ping")
         .then(res => res.json())
         .then(
@@ -54,6 +65,8 @@ class Stats extends Component {
           }
         )
     }
+
+
 
     updateStatsPush() {
         if (localStorage.getItem(`${this.props.match.params.platform}/${this.props.match.params.username}`) != null) {
@@ -249,6 +262,19 @@ class Stats extends Component {
 
 
     render() {
+        let makeFavoriteUser = () => {
+          if (this.state.isFavorite) {
+            localStorage.removeItem('favoriteUser');
+            this.setState({isFavorite: false});
+          } else {
+            let favoriteUser = {
+              username: this.state.username,
+              platform: this.state.platform
+            };
+            localStorage.setItem('favoriteUser', JSON.stringify(favoriteUser));
+            this.setState({isFavorite: true});
+          }
+        }
         const { platform, username, error, stats, matches, isLoading} = this.state;
         if (error != null) {
             return (
@@ -279,7 +305,7 @@ class Stats extends Component {
             return (
                 <DocumentTitle className="page" title={pageName}>
                 <div className="page home" id="page">
-                    <h1 className="username"><span className="level">{stats.level}</span> {username.replace("%23", "#")}</h1>
+                    <h1 className="username"><span className="level">{stats.level}</span> {username.replace("%23", "#")} <span onClick={makeFavoriteUser} className={`makeFavorite fav-${this.state.isFavorite}`}><i className="fa fa-star"></i></span></h1>
                     <div className="statsDiv container-fluid">
                       <h1 className="sub">Lifetime</h1>
                       <Row>

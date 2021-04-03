@@ -4,8 +4,6 @@ import DocumentTitle from 'react-document-title';
 
 import { Container, Row, Col, Button, Form } from 'react-bootstrap';
 
-import Stats from './Stats';
-
 import {
     Link,
     Redirect
@@ -30,11 +28,6 @@ class Home extends Component {
             platform: 'xbl',
             redirect: null
         });
-        if (localStorage.getItem("favoriteUser") != null) {
-            let cachedUser = JSON.parse(localStorage.getItem("favoriteUser"));
-            console.log(`/stats/${cachedUser.platform}/${cachedUser.username.replace("#", "%23")}`);
-            this.setState({ redirect: `/stats/${cachedUser.platform}/${cachedUser.username.replace("#", "%23")}` });
-        }
     }
 
     componentWillUnmount() {

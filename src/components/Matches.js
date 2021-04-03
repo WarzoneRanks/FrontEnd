@@ -7,6 +7,8 @@ export default class Matches extends React.Component {
         super(props);
         console.log(props);
         this.state = {
+            platform: null,
+            username: null,
             matches: null,
             isLoading: true,
             error: null
@@ -14,27 +16,12 @@ export default class Matches extends React.Component {
     }
 
     updateStats() {
-        fetch("https://wzapi.parkersmith.io/ping")
-        .then(res => res.json())
-        .then(
-          (result) => {
-            this.updateStatsPush();
-          },
-          // Note: it's important to handle errors here
-          // instead of a catch() block so that we don't swallow
-          // exceptions from actual bugs in components.
-          (error) => {
-            let APIerror = "We are currently experiencing some API issues, please try again soon..";
-            this.setState({
-                error: APIerror,
-                isLoading: false
-            });
-          }
-        )
+        this.updateStatsPush();
     }
 
     updateStatsPush() {
         if (localStorage.getItem(`${this.props.platform}/${this.props.username}/matches`) != null) {
+            console.log("Match Cache Exists");
             var cachedStats = JSON.parse(localStorage.getItem(`${this.props.platform}/${this.props.username}/matches`));
             if (Date.now() - cachedStats.timeGrabbed < 600000) {
                 this.setState({
@@ -43,6 +30,7 @@ export default class Matches extends React.Component {
                     isLoading: false
                 });
             } else {
+                console.log("Match Fetching new because time");
                 fetch(`https://wzapi.parkersmith.io/stats/${this.props.platform}/${this.props.username}/matches`)
                 .then(res => res.json())
                 .then(
@@ -79,6 +67,7 @@ export default class Matches extends React.Component {
                 )
             }
         } else {
+            console.log("Match Fetching new because doesn't exist");
             fetch(`https://wzapi.parkersmith.io/stats/${this.props.platform}/${this.props.username}/matches`)
                 .then(res => res.json())
                 .then(
@@ -117,11 +106,22 @@ export default class Matches extends React.Component {
     }
 
     componentWillMount() {
+        this.setState({
+            platform: this.props.platform,
+            username: this.props.username
+        })
         this.updateStats();
     }
 
     componentDidUpdate(prevProps) {
-        this.updateStats();
+        if (this.state.platform !== this.props.platform || this.state.username !== this.props.username ) {
+            this.setState({ 
+              platform: this.props.platform,
+              username: this.props.username,
+              isLoading: true
+            });
+            this.updateStats();
+          }
     }
     
 

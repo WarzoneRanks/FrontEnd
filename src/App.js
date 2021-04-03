@@ -1,7 +1,6 @@
 import './App.css';
 
 import Header from './components/Header';
-import OnlineStatus from './components/OnlineStatus';
 import { Container, Row, Col } from 'react-bootstrap';
 
 import {

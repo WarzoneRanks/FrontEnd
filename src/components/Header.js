@@ -4,8 +4,6 @@ import { NavLink } from 'react-router-dom';
 import { Container, Row, Col, Navbar, Nav } from 'react-bootstrap';
 import FontAwesome from 'react-fontawesome'
 
-import OnlineStatus from './OnlineStatus';
-
 class Header extends Component {
     render() {
         return (

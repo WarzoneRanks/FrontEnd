@@ -57,7 +57,7 @@ class Stats extends Component {
 
     updateStatsPush() {
         if (localStorage.getItem(`${this.props.match.params.platform}/${this.props.match.params.username}`) != null) {
-          console.log("Cache Exists");
+          console.log("Match Cache Exists");
           var cachedStats = JSON.parse(localStorage.getItem(`${this.props.match.params.platform}/${this.props.match.params.username}`));
           if (Date.now() - cachedStats.timeGrabbed < 600000) {
             console.log("Using cache");

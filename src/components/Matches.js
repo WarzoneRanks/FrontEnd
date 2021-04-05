@@ -237,6 +237,10 @@ export default class Matches extends React.Component {
                     size='2x'
                     className="m-t-20"
                     style={{ color: '#fff', 'marginTop': '15px', 'textAlign': 'center', 'margin': 'auto'}} />
+                    <div className="pageError">
+                      <p>Working on pulling your data...</p>
+                      <p>Load time are longer than normal currently as we rank stats live</p>
+                    </div>
                 </div>
             );
         } else {

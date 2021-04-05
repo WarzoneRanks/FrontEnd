@@ -15,6 +15,7 @@ class Header extends Component {
                             <Nav className="mr-auto navLinks">
                                 <NavLink to="/search"><p>Search Players</p></NavLink>
                                 <NavLink to="/about"><p>About</p></NavLink>
+                                <NavLink to="/favorites"><p>Favorites</p></NavLink>
                                 <a href="https://discord.gg/A3d8kYpQ24" target="_blank"><p>Discord</p></a>
                             </Nav>
                             <Nav>

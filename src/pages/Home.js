@@ -5,6 +5,7 @@ import DocumentTitle from 'react-document-title';
 import { Container, Row, Col, Button, Form } from 'react-bootstrap';
 
 import Stats from './Stats';
+import Favorites from './Favorites';
 
 import {
     Link,
@@ -94,6 +95,7 @@ class Home extends Component {
                         </Form>
                     </div>
                 </Container>
+                <Favorites fromPage="Home" />
             </div>
             </DocumentTitle>
         );

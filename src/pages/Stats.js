@@ -32,7 +32,12 @@ class Stats extends Component {
           matches: null,
           isLoading: true,
           error: null,
-          isFavorite: null
+          isHome: null,
+          homeText: " Mark as my profile",
+          isFav: null,
+          favText: " Add to favorites",
+          minutesLeft: 10,
+          secondsLeft: 0
         };
     }
 
@@ -40,11 +45,32 @@ class Stats extends Component {
         if (localStorage.getItem("favoriteUser") != null) {
           let cachedUser = JSON.parse(localStorage.getItem("favoriteUser"));
           if (this.props.match.params.username == cachedUser.username && this.props.match.params.platform == cachedUser.platform) {
-            this.setState({isFavorite: true});
-            console.log('is favorite');
+            this.setState({isHome: true, "homeText": ""});
+            console.log('is home');
           } else {
-            this.setState({isFavorite: false});
-            console.log('is not favorite');
+            this.setState({isHome: false, "homeText": " Mark as my profile"});
+            console.log('is not home');
+          }
+        }
+
+        if (localStorage.getItem("favorites") != null) {
+          let cachedUsers = JSON.parse(localStorage.getItem("favorites"));
+          let username = this.props.match.params.username;
+          let platform = this.props.match.params.platform;
+          console.log(username, platform);
+          let isFav = false;
+          cachedUsers.favorites.map(function(o) {
+            console.log(o.username, o.platform);
+            if (o.username == username && o.platform == platform) {
+              isFav = true;
+            } 
+          });
+          if (isFav) {
+            this.setState({isFav: true, "favText": ""});
+            console.log('is fav');
+          } else {
+            this.setState({isFav: false, "favText": " Add to favorites"});
+            console.log('is not fav');
           }
         }
         fetch("https://wzapi.parkersmith.io/ping")
@@ -69,6 +95,33 @@ class Stats extends Component {
 
 
     updateStatsPush() {
+        function millisToMinutesAndSeconds(millis) {
+          var minutes = Math.floor(millis / 60000);
+          var seconds = ((millis % 60000) / 1000).toFixed(0);
+          let timeLeft = {
+            minutes: minutes,
+            seconds: seconds
+          };
+          return timeLeft;
+        }
+        if (localStorage.getItem(`${this.props.match.params.platform}/${this.props.match.params.username}/matches`) != null) {
+          console.log("Match Cache Exists");
+          var cachedStats = JSON.parse(localStorage.getItem(`${this.props.match.params.platform}/${this.props.match.params.username}/matches`));
+          if (Date.now() - cachedStats.timeGrabbed < 600000) {
+            let difference = Date.now() - cachedStats.timeGrabbed;
+            let timeLeft = millisToMinutesAndSeconds(600000 - difference);
+            this.setState({
+              minutesLeft: timeLeft.minutes,
+              secondsLeft: timeLeft.seconds
+            });
+          } else {
+            this.setState({
+              minutesLeft: 10,
+              secondsLeft: 0
+            });
+
+          }
+        }
         if (localStorage.getItem(`${this.props.match.params.platform}/${this.props.match.params.username}`) != null) {
           console.log("Match Cache Exists");
           var cachedStats = JSON.parse(localStorage.getItem(`${this.props.match.params.platform}/${this.props.match.params.username}`));
@@ -243,6 +296,24 @@ class Stats extends Component {
             username: this.props.match.params.username
         })
         this.updateStats();
+        this.refreshTimer = setInterval(() => {
+          const { secondsLeft, minutesLeft } = this.state
+          if (secondsLeft > 0) {
+            this.setState(({ secondsLeft }) => ({
+              secondsLeft: secondsLeft - 1
+            }))
+          }
+          if (secondsLeft === 0) {
+            if (minutesLeft === 0) {
+              this.updateStats();
+            } else {
+              this.setState(({ minutesLeft }) => ({
+                minutesLeft: minutesLeft - 1,
+                secondsLeft: 59
+              }))
+            }
+          }
+        }, 1000);
     }
 
     componentDidUpdate(prevProps) {
@@ -262,20 +333,77 @@ class Stats extends Component {
 
 
     render() {
-        let makeFavoriteUser = () => {
-          if (this.state.isFavorite) {
+        let makeHomeUser = () => {
+          if (this.state.isHome) {
             localStorage.removeItem('favoriteUser');
-            this.setState({isFavorite: false});
+            this.setState({isHome: false, homeText: " Mark as my profile"});
           } else {
             let favoriteUser = {
               username: this.state.username,
               platform: this.state.platform
             };
             localStorage.setItem('favoriteUser', JSON.stringify(favoriteUser));
-            this.setState({isFavorite: true});
+            this.setState({isHome: true, homeText: ""});
+          
           }
         }
-        const { platform, username, error, stats, matches, isLoading} = this.state;
+
+        let makeFavoriteUser = () => {
+          let username = this.state.username;
+          let platform = this.state.platform;
+          if (this.state.isFav) {
+            let counter = -1;
+            let index;
+            let cachedUsers = JSON.parse(localStorage.getItem("favorites"));
+            let workingArray = cachedUsers.favorites;
+            workingArray.map(function(o) {
+              counter = counter + 1;
+              if (o.username == username && o.platform == platform) {
+                index = counter;
+              } 
+            });
+            workingArray.splice(index, 1);
+            if (workingArray.length != 0) {
+              let newJson = {
+                favorites: workingArray
+              }
+              localStorage.setItem("favorites", JSON.stringify(newJson));
+            } else {
+              localStorage.removeItem("favorites");
+            }
+            this.setState({isFav: false, favText: " Add to favorites"});
+          } else {
+            if (localStorage.getItem("favorites") != null) {
+              let cachedUsers = JSON.parse(localStorage.getItem("favorites"));
+              let workingArray = cachedUsers.favorites;
+              let favoriteUser = {
+                username: username,
+                platform: platform
+              };
+              workingArray.push(favoriteUser);
+              let newJson = {
+                favorites: workingArray
+              }
+              localStorage.setItem("favorites", JSON.stringify(newJson));
+            } else {
+              let workingArray = [];
+              let favoriteUser = {
+                username: username,
+                platform: platform
+              };
+              workingArray.push(favoriteUser);
+              let newJson = {
+                favorites: workingArray
+              }
+              localStorage.setItem("favorites", JSON.stringify(newJson));
+            }
+            this.setState({isFav: true, favText: ""});
+          }
+        }
+        const { platform, username, error, stats, matches, isLoading, minutesLeft, secondsLeft} = this.state;
+
+
+
         if (error != null) {
             return (
                 <DocumentTitle className="page" title="Warzone Stats - Stats">
@@ -297,6 +425,10 @@ class Stats extends Component {
                     size='2x'
                     className="m-t-20"
                     style={{ color: '#fff', 'marginTop': '15px', 'textAlign': 'center', 'margin': 'auto'}} />
+                    <div className="pageError">
+                      <p>Working on pulling your data...</p>
+                      <p>Load time are longer than normal currently as we rank stats live</p>
+                    </div>
                 </div>
                 </DocumentTitle>
             );
@@ -305,7 +437,16 @@ class Stats extends Component {
             return (
                 <DocumentTitle className="page" title={pageName}>
                 <div className="page home" id="page">
-                    <h1 className="username"><span className="level">{stats.level}</span> {username.replace("%23", "#")} <span onClick={makeFavoriteUser} className={`makeFavorite fav-${this.state.isFavorite}`}><i className="fa fa-star"></i></span></h1>
+                    <h1 className="username"><span className="level">{stats.level}</span> {username.replace("%23", "#")} 
+                      <div className="refreshTimer">
+                        <p><i className="far fa-clock"></i> {minutesLeft}:{ secondsLeft < 10 ? `0${ secondsLeft }` : secondsLeft }</p>
+                      </div>
+                    </h1>
+                    <div className="userOptions">
+                      <span onClick={makeHomeUser} className={`makeHomeB fav-${this.state.isHome}`}><i className="fal fa-home"></i>{this.state.homeText}</span>
+                      <span onClick={makeFavoriteUser} className={`makeFav favo-${this.state.isFav}`}><i className="far fa-star"></i>{this.state.favText}</span>
+                    </div>
+                    
                     <div className="statsDiv container-fluid">
                       <h1 className="sub">Lifetime</h1>
                       <Row>

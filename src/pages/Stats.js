@@ -73,7 +73,7 @@ class Stats extends Component {
             console.log('is not fav');
           }
         }
-        fetch("https://wzapi.parkersmith.io/ping")
+        fetch("https://app.warzoneranks.app/ping")
         .then(res => res.json())
         .then(
           (result) => {
@@ -135,7 +135,7 @@ class Stats extends Component {
             });
           } else {
             console.log("Fetching new because time");
-            fetch(`https://wzapi.parkersmith.io/stats/${this.props.match.params.platform}/${this.props.match.params.username}`)
+            fetch(`https://app.warzoneranks.app/stats/${this.props.match.params.platform}/${this.props.match.params.username}`)
             .then(res => res.json())
             .then(
               (result) => {
@@ -197,7 +197,7 @@ class Stats extends Component {
           }
         } else {
           console.log("Fetching new because doesn't exist");
-          fetch(`https://wzapi.parkersmith.io/stats/${this.props.match.params.platform}/${this.props.match.params.username}`)
+          fetch(`https://app.warzoneranks.app/stats/${this.props.match.params.platform}/${this.props.match.params.username}`)
           .then(res => res.json())
           .then(
             (result) => {
@@ -259,7 +259,7 @@ class Stats extends Component {
         }
         
 
-        /*fetch(`https://wzapi.parkersmith.io/stats/${this.props.match.params.platform}/${this.props.match.params.username}/matches`)
+        /*fetch(`https://app.warzoneranks.app/stats/${this.props.match.params.platform}/${this.props.match.params.username}/matches`)
         .then(res => res.json())
         .then(
           (result) => {

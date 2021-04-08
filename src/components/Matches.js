@@ -1,6 +1,10 @@
 import React from 'react';
 import FontAwesome from 'react-fontawesome';
 
+import {
+    Link
+} from 'react-router-dom';
+
 export default class Matches extends React.Component {
 
     constructor(props) {
@@ -31,7 +35,7 @@ export default class Matches extends React.Component {
                 });
             } else {
                 console.log("Match Fetching new because time");
-                fetch(`https://wzapi.parkersmith.io/stats/${this.props.platform}/${this.props.username}/matches`)
+                fetch(`https://app.warzoneranks.app/stats/${this.props.platform}/${this.props.username}/matches`)
                 .then(res => res.json())
                 .then(
                 (result) => {
@@ -68,7 +72,7 @@ export default class Matches extends React.Component {
             }
         } else {
             console.log("Match Fetching new because doesn't exist");
-            fetch(`https://wzapi.parkersmith.io/stats/${this.props.platform}/${this.props.username}/matches`)
+            fetch(`https://app.warzoneranks.app/stats/${this.props.platform}/${this.props.username}/matches`)
                 .then(res => res.json())
                 .then(
                 (result) => {
@@ -171,33 +175,46 @@ export default class Matches extends React.Component {
 
         return  this.state.matches.map(function(o) {
             if (o.mode.includes("br_br")) {
+                let rank = o.ranking.rank;
+                let rClass = o.ranking.class;
+                if (localStorage.getItem(`/match/${o.matchID}`) != null) {
+                    let localMatch = JSON.parse(localStorage.getItem(`/match/${o.matchID}`));
+                    console.log(localMatch);
+                    rank = localMatch.ranking.rank;
+                    rClass = localMatch.ranking.class;
+                }
                 return (
-                    <div className="stat match gray" id={"match-" + o.matchID}>
-                        <div className="title">{convertGameName(o.mode)} <span className="date">{convertDate(o.utcStartSeconds)}</span></div>
-                        <div className={isWin(o.playerStats.teamPlacement)}>{o.playerStats.teamPlacement}</div>
-                        <div className={`lobbyRank ${o.ranking.class}`}>{o.ranking.rank}</div>
-                        <div className="matchStats">
-                            <div class="matchStat">
-                                <h1>Kills</h1>
-                                <p>{o.playerStats.kills}</p>
+                    <Link to={`/match/${o.playerStats.teamPlacement}/${o.matchID}`}>
+                        <div className="stat match gray" id={"match-" + o.matchID}>
+                            <div className="title">{convertGameName(o.mode)} <span className="date">{convertDate(o.utcStartSeconds)}</span></div>
+                            <div className={isWin(o.playerStats.teamPlacement)}>{o.playerStats.teamPlacement}</div>
+                            <div className={`lobbyRank ${rClass}`}>{rank}</div>
+                            <div className="matchStats">
+                                <div class="matchStat">
+                                    <h1>Kills</h1>
+                                    <p>{o.playerStats.kills}</p>
+                                </div>
+                                <div class="matchStat">
+                                    <h1>Damage</h1>
+                                    <p>{o.playerStats.damageDone}</p>
+                                </div>
+                                <div class="matchStat extraStat">
+                                    <h1>Score</h1>
+                                    <p>{o.playerStats.score}</p>
+                                </div>
                             </div>
-                            <div class="matchStat">
-                                <h1>Damage</h1>
-                                <p>{o.playerStats.damageDone}</p>
-                            </div>
-                            <div class="matchStat extraStat">
-                                <h1>Score</h1>
-                                <p>{o.playerStats.score}</p>
+                            <div className="openPage">
+                            <i class="fas fa-external-link"></i> More Stats
                             </div>
                         </div>
-                    </div>
+                    </Link>
                 )
             } else {
                 return (
                     <div className="stat match gray alt-match" id={"match-" + o.matchID}>
                         <div className="title">{convertGameName(o.mode)} <span className="date">{convertDate(o.utcStartSeconds)}</span></div>
                         <div className={isWin(o.playerStats.teamPlacement)}>{o.playerStats.teamPlacement}</div>
-                        <div className={`lobbyRank ${o.ranking.class}`}>{o.ranking.rank}</div>
+                        <div className={`lobbyRank gray`}>NOT RANKED</div>
                         <div className="matchStats">
                             <div class="matchStat">
                                 <h1>Kills</h1>

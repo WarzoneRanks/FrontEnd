@@ -3,6 +3,7 @@ import React, { Component } from 'react';
 import DocumentTitle from 'react-document-title';
 
 import { Container, Row, Col, Button } from 'react-bootstrap';
+import BigWhiteLogo from '../assets/images/Logo-Big-White.svg';
 
 import {
     Link
@@ -24,7 +25,9 @@ class NotFound extends Component {
         return (
             <DocumentTitle className="page" title='Warzone Stats - 404'>
             <div className="page home" id="page">
-                <h1 className="pageTitle aboutPageTitle">About Warzone Ranks</h1>
+                <div className="aboutImage">
+                    <img src={BigWhiteLogo}></img>
+                </div>
                 <div className="aboutPageContainer">
                     <h2>Who we are</h2>
                     <p>Hi there! My name is Parker and I'm a highschool student who enjoys development and is a huge warzone fan. I've played warzone almost since the start and have really enjoyed the game. I was a huge advocate for SBMM Warzone and the hard work they did. It allowed for there to be an equal playing field for streamers and players to see the kinds of lobbies everyone was being put in and it allowed for players to be able to see how their k/d, wins, etc stacks up against others.</p>

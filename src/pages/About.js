@@ -23,8 +23,8 @@ class NotFound extends Component {
 
     render() {
         return (
-            <DocumentTitle className="page" title='Warzone Stats - 404'>
-            <div className="page home" id="page">
+            <DocumentTitle className="page" title='Warzone Stats - About'>
+            <div className="page about" id="page">
                 <div className="aboutImage">
                     <img src={BigWhiteLogo}></img>
                 </div>

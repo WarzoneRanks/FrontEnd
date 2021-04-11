@@ -16,6 +16,7 @@ import Search from './pages/Search';
 import Favorites from './pages/Favorites';
 import NotFound from './pages/NotFound';
 import About from './pages/About';
+import Famous from './pages/Famous';
 import UserMatch from './pages/UserMatch';
 
 function App() {
@@ -28,6 +29,7 @@ function App() {
               <Route path="/stats/:platform/:username" component={Stats} />
               <Route path='/about' component={About}/>
               <Route path='/search' component={Search}/>
+              <Route path='/famous' component={Famous}/>
               <Route path='/favorites' component={Favorites}/>
               <Route path='/match/:place/:matchID' component={UserMatch}/>
               <Route path='/404' component={NotFound}/>

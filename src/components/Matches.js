@@ -20,7 +20,23 @@ export default class Matches extends React.Component {
     }
 
     updateStats() {
-        this.updateStatsPush();
+        fetch("https://app.warzoneranks.app/ping")
+        .then(res => res.json())
+        .then(
+          (result) => {
+            this.updateStatsPush();
+          },
+          // Note: it's important to handle errors here
+          // instead of a catch() block so that we don't swallow
+          // exceptions from actual bugs in components.
+          (error) => {
+            let APIerror = "We are currently experiencing some API issues, please try again soon..";
+            this.setState({
+                error: APIerror,
+                isLoading: false
+            });
+          }
+        )
     }
 
     updateStatsPush() {
@@ -40,7 +56,7 @@ export default class Matches extends React.Component {
                 .then(
                 (result) => {
                     if (!result.error) {
-                        console.log(result.data);
+                        //console.log(result.data);
                         var results = {
                             data: result.data,
                             timeGrabbed: Date.now(),
@@ -77,7 +93,7 @@ export default class Matches extends React.Component {
                 .then(
                 (result) => {
                     if (!result.error) {
-                        console.log(result.data);
+                        //console.log(result.data);
                         var results = {
                             data: result.data,
                             timeGrabbed: Date.now(),
@@ -118,7 +134,7 @@ export default class Matches extends React.Component {
     }
 
     componentDidUpdate(prevProps) {
-        if (this.state.platform !== this.props.platform || this.state.username !== this.props.username ) {
+        if (this.state.platform !== this.props.platform || this.state.username !== this.props.username) {
             this.setState({ 
               platform: this.props.platform,
               username: this.props.username,
@@ -159,7 +175,9 @@ export default class Matches extends React.Component {
         function convertDate(epoch) {
             var d = new Date(0); 
             d.setUTCSeconds(epoch);
-            var dateString = d.getMonth() + 1 + "/" + d.getDate() + "/" + d.getFullYear() + " " + d.getHours() + ":" + d.getMinutes();
+            let minutes = d.getMinutes();
+            if (minutes.toString().length == 1) minutes = "0" + minutes.toString();
+            var dateString = d.getMonth() + 1 + "/" + d.getDate() + "/" + d.getFullYear() + " " + d.getHours() + ":" + minutes;
             return dateString;
 
         }
@@ -179,7 +197,7 @@ export default class Matches extends React.Component {
                 let rClass = o.ranking.class;
                 if (localStorage.getItem(`/match/${o.matchID}`) != null) {
                     let localMatch = JSON.parse(localStorage.getItem(`/match/${o.matchID}`));
-                    console.log(localMatch);
+                    //console.log(localMatch);
                     rank = localMatch.ranking.rank;
                     rClass = localMatch.ranking.class;
                 }

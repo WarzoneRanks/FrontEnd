@@ -1,5 +1,5 @@
 .header {
-  height: 70px;
+  height: 100px;
   width: 100vw;
   background: #20262f;
 }
@@ -21,7 +21,21 @@
   font-size: 19px;
   margin: auto 15px;
   padding: .5rem 0.3rem;
+  color: #ffffffba;
+  margin-top: -7px;
+}
+
+a.active p {
   color: #fff;
+}
+
+.navLinks > a {
+  width: 115px;
+}
+
+.navLinks a p div {
+  margin-top: -3px;
+  font-size: 18px;
 }
 
 .navLinks > a:hover {
@@ -141,16 +155,19 @@ h1.sub.pad {
   margin-bottom: 40px;
 }
 
+.page.about {
+  margin: 0 20px;
+}
+
 .aboutPageContainer {
   background: #1d232b;
-  width: 50%;
   margin: auto;
   padding: 20px;
   border-radius: 5px;
   margin-top: 20px;
   margin-bottom: 30px;
+  max-width: 840px;
 }
-
 .aboutLink {
   color: #fff;
   font-weight: bold;
@@ -333,6 +350,47 @@ h1.sub.pad {
   font-size: 15px;
 }
 
+.famousPlayers {
+  max-width: 840px;
+  margin: auto;
+  margin-top: 20px;
+}
+
+.famousPlayer img {
+  height: 70px;
+  border-radius: 100px;
+  border: 3px solid #9147ff;
+}
+
+.famousPlayer h1 {
+  font-size: 21px;
+  font-weight: 800;
+  padding-top: 5px;
+  margin-top: 10px;
+}
+
+.famousPlayer p {
+  margin-top: -5px;
+  font-size: 14px;
+  color: #ffffffad;
+}
+
+.famousPlayer .socials {
+  margin-top: -13px;
+  margin-bottom: 10px;
+}
+
+.famousPlayer .socials a {
+  padding: 5px;
+}
+
+.famousPlayer {
+  background: #20262f;
+  border-radius: 5px;
+  padding: 15px;
+  margin-bottom: 20px;
+}
+
 .legend {
   background: #04c1c1 !important;;
 }
@@ -444,6 +502,7 @@ h1.sub.pad {
 .logoText {
   position: absolute;
   left: 30px;
+  top: 10px;
   z-index: 2;
 }
 
@@ -497,6 +556,7 @@ a:hover {
 
 .navbar {
   z-index: 1;
+  padding-top: 20px;
 }
 
 .userOptions {
@@ -568,7 +628,7 @@ a:hover {
   position: absolute;
   right: 20px;
   width: 140px;
-  top: 14px;
+  top: 29px;
 }
 
 .matchDifficulty .statRanking {
@@ -806,6 +866,12 @@ th.playerName {
 
 
 @media only screen and (max-width: 770px) {
+  .extra-nav {
+    position: absolute;
+    right: 40px;
+    width: 140px;
+    top: 14px;
+  }
 
   .searchBoxContainer {
     padding: 20px 10px !important;
@@ -911,6 +977,7 @@ th.playerName {
   
   .navbar-light .navbar-toggler-icon {
     background-image: url("data:image/svg+xml,%3csvg viewBox='0 0 30 30' xmlns='http://www.w3.org/2000/svg'%3e%3cpath stroke='rgba(255, 255, 255, 1)' stroke-width='2' stroke-linecap='round' stroke-miterlimit='10' d='M4 7h22M4 15h22M4 23h22'/%3e%3c/svg%3e");
+    margin-top: 15px;
   }
   
   .navbar-light .navbar-toggler {
@@ -923,5 +990,9 @@ th.playerName {
     /* float: right; */
     position: absolute;
     right: 0;
+  }
+  
+  .navLinks > a {
+    margin: auto;
   }
 }

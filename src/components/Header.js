@@ -15,9 +15,11 @@ class Header extends Component {
                         <Navbar.Toggle aria-controls="responsive-navbar-nav" />
                         <Navbar.Collapse id="responsive-navbar-nav">
                             <Nav className="mr-auto navLinks">
-                                <NavLink to="/search"><p>Search Players</p></NavLink>
-                                <NavLink to="/about"><p>About</p></NavLink>
-                                <NavLink to="/favorites"><p>Favorites</p></NavLink>
+                                <NavLink to="/search"><p><i className="fa fa-search"></i><div>Search</div></p></NavLink>
+                                <NavLink to="/about"><p><i className="fa fa-question"></i><div>About</div></p></NavLink>
+                                <NavLink to="/"><p><i className="fa fa-home"></i><div>Home</div></p></NavLink>
+                                <NavLink to="/favorites"><p><i className="fa fa-star"></i><div>Favorites</div></p></NavLink>
+                                <NavLink to="/famous"><p><i className="fa fa-microphone"></i> <div>Famous</div></p></NavLink>
                                 <div className="extra-nav">
                                     <a href="https://www.buymeacoffee.com/parkersm1" target="_blank"><p><i class="far fa-coffee-togo"></i></p></a>
                                     <a href="https://discord.gg/A3d8kYpQ24" target="_blank"><p><i className="fab fa-discord"></i></p></a>

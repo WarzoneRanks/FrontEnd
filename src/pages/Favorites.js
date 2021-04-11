@@ -85,7 +85,7 @@ class Favorites extends Component {
                 return (
                     <div className="favorite">
                         <p><i className={`fab fa-${getPlatformIcon(o.platform)}`}></i> {o.username.replace("%23", "#")}</p>
-                        <a href={`/stats/${o.platform}/${o.username}`}><button className="btn btn-success">Visit Profile</button></a>
+                        <Link to={`/stats/${o.platform}/${o.username}`}><button className="btn btn-success">Visit Profile</button></Link>
                     </div>
                 )
             });

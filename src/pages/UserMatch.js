@@ -354,8 +354,11 @@ class Match extends Component {
 
         let convertDate = (epoch) => {
             var d = new Date(0); 
-            d.setUTCSeconds(epoch);
-            var dateString = convertNumToDay(d.getDay()) + " " + (d.getMonth() + 1) + "/" + d.getDate() + "/" + d.getYear() + " • " + d.getHours() + ":" + d.getMinutes();
+            var sec = epoch / 1000;
+            d.setUTCSeconds(sec);
+            let minutes = d.getMinutes();
+            if (minutes.toString().length == 1) minutes = "0" + minutes.toString();
+            var dateString = convertNumToDay(d.getDay()) + " " + (d.getMonth() + 1) + "/" + d.getDate() + "/" + d.getFullYear() + " • " + d.getHours() + ":" + minutes;
             return dateString;
 
         }

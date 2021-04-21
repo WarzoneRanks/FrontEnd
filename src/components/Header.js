@@ -10,7 +10,7 @@ class Header extends Component {
     render() {
         return (
             <div className="header">
-                    <h1 className="logoText"><NavLink to="/"><img src={LogoSmall}></img></NavLink></h1>
+                    <h1 className="logoText"><NavLink to="/"><img src={LogoSmall}></img> <span className="badge badge-dark">BETA</span></NavLink></h1>
                     <Navbar collapseOnSelect expand="lg">
                         <Navbar.Toggle aria-controls="responsive-navbar-nav" />
                         <Navbar.Collapse id="responsive-navbar-nav">

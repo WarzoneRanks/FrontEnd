@@ -448,6 +448,54 @@ h1.sub.pad {
   color: #CB7F36 !important;;
 }
 
+.alpha {
+  background: #5ae498 !important;
+}
+
+.alpha-text {
+  color: #87daac !important;
+}
+
+.bravo {
+  background: #f7824a !important;
+}
+
+.bravo-text {
+  color: #f7824a !important;
+}
+
+.charlie {
+  background: #bb7bb6 !important;
+}
+
+.charlie-text {
+  color: #bb7bb6 !important;
+}
+
+.delta {
+  background: #388be0 !important;
+}
+
+.delta-text {
+  color: #388be0 !important;
+}
+
+.echo {
+  background: #ce6363 !important;
+}
+
+.echo-text {
+  color: #ce6363 !important;
+}
+
+.foxtrot {
+  background: #1dafaf !important;
+}
+
+.foxtrot-text {
+  color: #1dafaf !important;
+}
+
 .matchStats {
   width: 65%;
   float: right;

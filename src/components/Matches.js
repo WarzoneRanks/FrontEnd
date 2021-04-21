@@ -161,6 +161,18 @@ export default class Matches extends React.Component {
                 case "br_brsolo":
                     newName = "BR Solo";
                 break;
+                case "br_brz_brquads":
+                    newName = "BR Quads";
+                break;
+                case "br_brz_brtrios":
+                    newName = "BR Trios";
+                break;
+                case "br_brz_brduos":
+                    newName = "BR Duos";
+                break;
+                case "br_brz_brsolo":
+                    newName = "BR Solo";
+                break;
                 case "br_dmz_plndtrios":
                     newName = "Plunder Trios";
                 break;

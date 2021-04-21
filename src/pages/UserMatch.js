@@ -22,11 +22,19 @@ class Match extends Component {
           matchStats: null,
           displayOption: 0
         };
+
+        let baseURL = "https://app.warzoneranks.app";
+
+        if (process.env.NODE_ENV == "development") {
+            baseURL = "https://aquarius.warzoneranks.app/dev";
+        }
+
+        this.baseURL = baseURL;
     }
 
     updateStats() {
         
-        fetch("https://app.warzoneranks.app/ping")
+        fetch(`${this.baseURL}/ping`)
         .then(res => res.json())
         .then(
           (result) => {
@@ -48,7 +56,7 @@ class Match extends Component {
 
 
     updateStatsPush() {
-        fetch(`https://app.warzoneranks.app/matches/fullMatch/${this.props.match.params.matchID}`)
+        fetch(`${this.baseURL}/matches/fullMatch/${this.props.match.params.matchID}`)
             .then(res => res.json())
             .then(
               (result) => {

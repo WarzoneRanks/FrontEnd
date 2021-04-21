@@ -17,10 +17,18 @@ export default class Matches extends React.Component {
             isLoading: true,
             error: null
         }
+
+        let baseURL = "https://app.warzoneranks.app";
+
+        if (process.env.NODE_ENV == "development") {
+            baseURL = "https://aquarius.warzoneranks.app/dev";
+        }
+
+        this.baseURL = baseURL;
     }
 
     updateStats() {
-        fetch("https://app.warzoneranks.app/ping")
+        fetch(`${this.baseURL}/ping`)
         .then(res => res.json())
         .then(
           (result) => {
@@ -51,7 +59,7 @@ export default class Matches extends React.Component {
                 });
             } else {
                 console.log("Match Fetching new because time");
-                fetch(`https://app.warzoneranks.app/stats/${this.props.platform}/${this.props.username}/matches`)
+                fetch(`${this.baseURL}/stats/${this.props.platform}/${this.props.username}/matches`)
                 .then(res => res.json())
                 .then(
                 (result) => {
@@ -88,7 +96,7 @@ export default class Matches extends React.Component {
             }
         } else {
             console.log("Match Fetching new because doesn't exist");
-            fetch(`https://app.warzoneranks.app/stats/${this.props.platform}/${this.props.username}/matches`)
+            fetch(`${this.baseURL}/stats/${this.props.platform}/${this.props.username}/matches`)
                 .then(res => res.json())
                 .then(
                 (result) => {

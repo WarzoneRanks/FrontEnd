@@ -34,6 +34,9 @@ class Header extends Component {
     
     }
 
+    redirectToPage(e) {
+        e.preventDefault();
+    }
 
     handleInputFocus = () => {
         this.setState({ displaySearch: true });
@@ -42,14 +45,8 @@ class Header extends Component {
     handleInputBlur = () => {
         setTimeout(() => {
             this.setState({ displaySearch: false });
-        }, 100)
+        }, 200)
     };
-
-    cleatInput = () => {
-        Array.from(document.querySelectorAll("input")).forEach(
-            input => (input.value = "")
-          );
-    }
 
     setUsername(e) {
         this.setState({
@@ -115,7 +112,7 @@ class Header extends Component {
                                     <div className="row">
                                         <div className="col-8">
                                             <div class="statsDiv navMargin">
-                                                <Form inline className="searchForm">
+                                                <Form inline className="searchForm" onSubmit={this.redirectToPage.bind(this)}>
                                                     <InputGroup>
                                                         <InputGroup.Prepend>
                                                             <InputGroup.Text>

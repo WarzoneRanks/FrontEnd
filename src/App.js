@@ -17,26 +17,38 @@ import Favorites from './pages/Favorites';
 import NotFound from './pages/NotFound';
 import About from './pages/About';
 import Famous from './pages/Famous';
+import Recent from './pages/Recent';
 import UserMatch from './pages/UserMatch';
+import NewHome from './pages/NewHome';
 
 function App() {
   return (
     <div className="App">
       <BrowserRouter>
             <Header />
-            <Switch>
-              <Route exact path="/" component={Home} />
-              <Route path="/stats/:platform/:username" component={Stats} />
-              <Route path='/about' component={About}/>
-              <Route path='/search' component={Search}/>
-              <Route path='/famous' component={Famous}/>
-              <Route path='/favorites' component={Favorites}/>
-              <Route path='/match/:place/:matchID' component={UserMatch}/>
-              <Route path='/404' component={NotFound}/>
-              <Route render={() => (
-                <Redirect to="/404"/>
-              )}/>
-            </Switch>
+            <div className="row">
+              <div className="col-3 statsDiv">
+                <h1 className="sub pad">Players</h1>
+                <Favorites fromPage="Home" />
+                <Recent fromPage="Home" />
+              </div>
+              <div className="col-9 mainSection">
+              <Switch>
+                <Route exact path="/" component={Home} />
+                <Route path="/stats/:platform/:username" component={Stats} />
+                <Route path='/about' component={About}/>
+                <Route path='/newHome' component={NewHome}/>
+                <Route path='/search' component={Search}/>
+                <Route path='/famous' component={Famous}/>
+                <Route path='/favorites' component={Favorites}/>
+                <Route path='/match/:place/:matchID' component={UserMatch}/>
+                <Route path='/404' component={NotFound}/>
+                <Route render={() => (
+                  <Redirect to="/404"/>
+                )}/>
+              </Switch>
+              </div>
+            </div>
       </BrowserRouter>
     </div>
   );

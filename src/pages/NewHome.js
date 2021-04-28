@@ -11,7 +11,7 @@ import {
 } from 'react-router-dom';
 
 
-class Stats extends Component {
+class NewHome extends Component {
 
     constructor(props) {
         super(props);
@@ -41,6 +41,19 @@ class Stats extends Component {
           displayOption: false
         };
 
+        let platform;
+        let username;
+
+        if (localStorage.getItem("favoriteUser") != null) {
+            let favUser = JSON.parse(localStorage.getItem("favoriteUser"));
+            platform = favUser.platform;
+            username = favUser.username;
+            console.log(favUser);
+        }
+
+        this.platform = platform;
+        this.username = username;
+
         let baseURL = "https://app.warzoneranks.app";
 
         if (process.env.NODE_ENV == "development" || window.location.href.includes("beta.warzoneranks.app")) {
@@ -53,7 +66,7 @@ class Stats extends Component {
     updateStats() {
         if (localStorage.getItem("favoriteUser") != null) {
           let cachedUser = JSON.parse(localStorage.getItem("favoriteUser"));
-          if (this.props.match.params.username == cachedUser.username && this.props.match.params.platform == cachedUser.platform) {
+          if (this.username == cachedUser.username && this.platform == cachedUser.platform) {
             this.setState({isHome: true, "homeText": ""});
             console.log('is home');
           } else {
@@ -64,8 +77,8 @@ class Stats extends Component {
 
         if (localStorage.getItem("favorites") != null) {
           let cachedUsers = JSON.parse(localStorage.getItem("favorites"));
-          let username = this.props.match.params.username;
-          let platform = this.props.match.params.platform;
+          let username = this.username;
+          let platform = this.platform;
           console.log(username, platform);
           let isFav = false;
           cachedUsers.favorites.map(function(o) {
@@ -113,9 +126,9 @@ class Stats extends Component {
           };
           return timeLeft;
         }
-        if (localStorage.getItem(`${this.props.match.params.platform}/${this.props.match.params.username}/matches`) != null) {
+        if (localStorage.getItem(`${this.platform}/${this.username}/matches`) != null) {
           console.log("Match Cache Exists");
-          var cachedStats = JSON.parse(localStorage.getItem(`${this.props.match.params.platform}/${this.props.match.params.username}/matches`));
+          var cachedStats = JSON.parse(localStorage.getItem(`${this.platform}/${this.username}/matches`));
           if (Date.now() - cachedStats.timeGrabbed < 600000) {
             let difference = Date.now() - cachedStats.timeGrabbed;
             let timeLeft = millisToMinutesAndSeconds(600000 - difference);
@@ -131,9 +144,9 @@ class Stats extends Component {
 
           }
         }
-        if (localStorage.getItem(`${this.props.match.params.platform}/${this.props.match.params.username}`) != null) {
+        if (localStorage.getItem(`${this.platform}/${this.username}`) != null) {
           console.log("Match Cache Exists");
-          var cachedStats = JSON.parse(localStorage.getItem(`${this.props.match.params.platform}/${this.props.match.params.username}`));
+          var cachedStats = JSON.parse(localStorage.getItem(`${this.platform}/${this.username}`));
           if (Date.now() - cachedStats.timeGrabbed < 600000) {
             console.log("Using cache");
             console.log(cachedStats.timeGrabbed);
@@ -144,7 +157,7 @@ class Stats extends Component {
             });
           } else {
             console.log("Fetching new because time");
-            fetch(`${this.baseURL}/stats/${this.props.match.params.platform}/${this.props.match.params.username}`)
+            fetch(`${this.baseURL}/stats/${this.platform}/${this.username}`)
             .then(res => res.json())
             .then(
               (result) => {
@@ -184,7 +197,7 @@ class Stats extends Component {
                       error: null,
                       isLoading: false
                     });
-                    localStorage.setItem(`${this.props.match.params.platform}/${this.props.match.params.username}`, JSON.stringify(stats));
+                    localStorage.setItem(`${this.platform}/${this.username}`, JSON.stringify(stats));
                 } else {
                     this.setState({
                       error: result.msg,
@@ -206,7 +219,7 @@ class Stats extends Component {
           }
         } else {
           console.log("Fetching new because doesn't exist");
-          fetch(`${this.baseURL}/stats/${this.props.match.params.platform}/${this.props.match.params.username}`)
+          fetch(`${this.baseURL}/stats/${this.platform}/${this.username}`)
           .then(res => res.json())
           .then(
             (result) => {
@@ -246,7 +259,7 @@ class Stats extends Component {
                     error: null,
                     isLoading: false
                   });
-                  localStorage.setItem(`${this.props.match.params.platform}/${this.props.match.params.username}`, JSON.stringify(stats));
+                  localStorage.setItem(`${this.platform}/${this.username}`, JSON.stringify(stats));
               } else {
                   this.setState({
                     error: result.msg,
@@ -268,7 +281,7 @@ class Stats extends Component {
         }
         
 
-        /*fetch(`https://app.warzoneranks.app/stats/${this.props.match.params.platform}/${this.props.match.params.username}/matches`)
+        /*fetch(`https://app.warzoneranks.app/stats/${this.platform}/${this.username}/matches`)
         .then(res => res.json())
         .then(
           (result) => {
@@ -301,8 +314,8 @@ class Stats extends Component {
 
     componentWillMount() {
         this.setState({
-            platform: this.props.match.params.platform,
-            username: this.props.match.params.username
+            platform: this.platform,
+            username: this.username
         })
         this.updateStats();
         this.refreshTimer = setInterval(() => {
@@ -326,10 +339,10 @@ class Stats extends Component {
     }
 
     componentDidUpdate(prevProps) {
-        if (this.state.platform !== this.props.match.params.platform || this.state.username !== this.props.match.params.username ) {
+        if (this.state.platform !== this.platform || this.state.username !== this.username ) {
           this.setState({ 
-            platform: this.props.match.params.platform,
-            username: this.props.match.params.username,
+            platform: this.platform,
+            username: this.username,
             isLoading: true
           });
           this.updateStats();
@@ -440,173 +453,153 @@ class Stats extends Component {
                 brActive = "active";
             }
         }
-
         const { platform, username, error, stats, matches, isLoading, minutesLeft, secondsLeft} = this.state;
 
 
 
         if (error != null) {
-          return (
-              <DocumentTitle className="page" title='Warzone Stats - Stats'>
-              <div className="page home" id="page">
-                  <div className="container-fluid">
-                      <div className="row">
-                          <div className="col-8">
-                              <div className="statsDiv ">
-                                  <div className="pageError">
-                                    <p>An error has occured..</p>
-                                    <p>{error}</p>
-                                  </div>
-                              </div>
-                          </div>
-                          
-                          <div className="col-4">
-                              <div className="statsDiv">
-                                  <h1 className="sub pad">Uh oh!</h1>
-                                  <div className="statsBox">
-                                      <div className="mainStats">
-                                          <h1 className="username">An error occured</h1>
-                                      </div>
-                                  </div>
-                              </div>
-                          </div>
-                      </div>
-                  </div>
-              </div>
-              </DocumentTitle>
-          );
-      } else if (isLoading) {
-          return (
-              <DocumentTitle className="page" title='Warzone Stats - Stats'>
-              <div className="page home" id="page">
-                  <div className="container-fluid">
-                      <div className="row">
-                          <div className="col-8">
-                              <div className="statsDiv ">
-                                  <h1 className="sub pad">{username.replace("%23", "#")}'s Matches</h1>
-                                  <FontAwesome 
-                                      name='spinner-third'
-                                      spin
-                                      size='2x'
-                                      className="m-t-20"
-                                      style={{ color: '#fff', 'marginTop': '15px', 'textAlign': 'center', 'margin': 'auto'}} />
-                                      <div className="pageError">
-                                      <p>Working on pulling your data...</p>
-                                      <p>Load time are longer than normal currently as we rank stats live</p>
-                                      </div>
-                              </div>
-                          </div>
-                          
-                          <div className="col-4">
-                              <div className="statsDiv">
-                                  <h1 className="sub pad">{username.replace("%23", "#")}'s Stats</h1>
-                                  <div className="statsBox">
-                                      <div className="mainStats">
-                                          <h1 className="username">{username.replace("%23", "#")}</h1>
-                                      </div>
-                                  </div>
-                                  <FontAwesome 
-                                          name='spinner-third'
-                                          spin
-                                          size='2x'
-                                          className="m-t-20"
-                                          style={{ color: '#fff', 'marginTop': '15px', 'textAlign': 'center', 'margin': 'auto'}} />
-                              </div>
-                          </div>
-                      </div>
-                  </div>
-              </div>
-              </DocumentTitle>
-          );
-      } else {
-          let pageName = `Warzone Stats - Home`;
-          return (
-              <DocumentTitle className="page" title={pageName}>
-              <div className="page home" id="page">
-                  <div className="container-fluid">
-                      <div className="row">
-                          <div className="col-8">
-                              <div className="statsDiv ">
-                                  <h1 className="sub pad">{username.replace("%23", "#")}'s Matches</h1>
-                                  
-                                  <Matches displayAlt={this.state.displayOption} platform={platform} username={username}></Matches>
-                              </div>
-                          </div>
-                          
-                          <div className="col-4">
-                              <div className="statsDiv">
-                                  <h1 className="sub pad">{username.replace("%23", "#")}'s Stats</h1>
-                                  <div className="statsBox first">
-                                      <div className="mainStats">
-                                          <h1 className="username">{username.replace("%23", "#")}</h1>
-                                          <div className="userOptions">
-                                              <span onClick={makeHomeUser} className={`makeHomeB fav-${this.state.isHome}`}><i className="fal fa-home"></i>{this.state.homeText}</span>
-                                              <span onClick={makeFavoriteUser} className={`makeFav favo-${this.state.isFav}`}><i className="far fa-star"></i>{this.state.favText}</span>
-                                          </div>
-                                          <div className="refreshTimer">
-                                              <p><i className="far fa-clock"></i> {minutesLeft}:{ secondsLeft < 10 ? `0${ secondsLeft }` : secondsLeft }</p>
-                                          </div>
-                                          <div className="matchOptions">
-                                            <div onClick={showAll} className={`matchOption ${allActive}`}>All</div>
-                                            <div onClick={showBR} className={`matchOption ${brActive}`}>Just BR</div>
+            return (
+                <DocumentTitle className="page" title="Warzone Stats - Stats">
+                <div className="page home" id="page">
+                    <div className="pageError">
+                      <p>An error has occured..</p>
+                      <p>{error}</p>
+                    </div>
+                </div>
+                </DocumentTitle>
+            );
+        } else if (isLoading) {
+            return (
+                <DocumentTitle className="page" title='Warzone Stats - Home'>
+                <div className="page home" id="page">
+                    <div className="container-fluid">
+                        <div className="row">
+                            <div className="col-8">
+                                <div className="statsDiv ">
+                                    <h1 className="sub pad">Your Matches</h1>
+                                    <FontAwesome 
+                                        name='spinner-third'
+                                        spin
+                                        size='2x'
+                                        className="m-t-20"
+                                        style={{ color: '#fff', 'marginTop': '15px', 'textAlign': 'center', 'margin': 'auto'}} />
+                                        <div className="pageError">
+                                        <p>Working on pulling your data...</p>
+                                        <p>Load time are longer than normal currently as we rank stats live</p>
                                         </div>
-                                      </div>
-                                  </div>
-                                  <div className="statsBox">
-                                      <h1 className="statsTitle">
-                                          Lifetime
-                                      </h1>
-                                      <div className="rankedStat">
-                                          <h1>K/D</h1>
-                                          <p>{stats.kd}</p>
-                                          <p className={`ranking ${stats.ranking.kd.class}`}>{stats.ranking.kd.rank} - {stats.ranking.kd.percentage}</p>
-                                      </div>
-                                      <div className="rankedStat">
-                                          <h1>Wins</h1>
-                                          <p>{stats.wins}</p>
-                                          <p className={`ranking ${stats.ranking.wins.class}`}>{stats.ranking.wins.rank} - {stats.ranking.wins.percentage}</p>
-                                      </div>
-                                      <div className="rankedStat">
-                                          <h1>Kills/Game</h1>
-                                          <p>{stats.killsPerGame}</p>
-                                          <p className={`ranking ${stats.ranking.killsPerGame.class}`}>{stats.ranking.killsPerGame.rank} - {stats.ranking.killsPerGame.percentage}</p>
-                                      </div>
-                                  </div>
+                                </div>
+                            </div>
+                            
+                            <div className="col-4">
+                                <div className="statsDiv">
+                                    <h1 className="sub pad">Your Stats</h1>
+                                    <div className="statsBox">
+                                        <div className="mainStats">
+                                            <h1 className="username">{username.replace("%23", "#")}</h1>
+                                        </div>
+                                    </div>
+                                    <FontAwesome 
+                                            name='spinner-third'
+                                            spin
+                                            size='2x'
+                                            className="m-t-20"
+                                            style={{ color: '#fff', 'marginTop': '15px', 'textAlign': 'center', 'margin': 'auto'}} />
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                </DocumentTitle>
+            );
+        } else {
+            let pageName = `Warzone Stats - Home`;
+            return (
+                <DocumentTitle className="page" title={pageName}>
+                <div className="page home" id="page">
+                    <div className="container-fluid">
+                        <div className="row">
+                            <div className="col-8">
+                                <div className="statsDiv ">
+                                    <h1 className="sub pad">Your Matches</h1>
+                                    
+                                    <Matches displayAlt={this.state.displayOption} platform={platform} username={username}></Matches>
+                                </div>
+                            </div>
+                            
+                            <div className="col-4">
+                                <div className="statsDiv">
+                                    <h1 className="sub pad">Your Stats</h1>
+                                    <div className="statsBox first">
+                                        <div className="mainStats">
+                                            <h1 className="username">{username.replace("%23", "#")}</h1>
+                                            <div className="userOptions">
+                                                <span onClick={makeHomeUser} className={`makeHomeB fav-${this.state.isHome}`}><i className="fal fa-home"></i>{this.state.homeText}</span>
+                                                <span onClick={makeFavoriteUser} className={`makeFav favo-${this.state.isFav}`}><i className="far fa-star"></i>{this.state.favText}</span>
+                                            </div>
+                                            <div className="refreshTimer">
+                                                <p><i className="far fa-clock"></i> {minutesLeft}:{ secondsLeft < 10 ? `0${ secondsLeft }` : secondsLeft }</p>
+                                            </div>
+                                            <div className="matchOptions">
+                                              <div onClick={showAll} className={`matchOption ${allActive}`}>All</div>
+                                              <div onClick={showBR} className={`matchOption ${brActive}`}>Just BR</div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div className="statsBox">
+                                        <h1 className="statsTitle">
+                                            Lifetime
+                                        </h1>
+                                        <div className="rankedStat">
+                                            <h1>K/D</h1>
+                                            <p>{stats.kd}</p>
+                                            <p className={`ranking ${stats.ranking.kd.class}`}>{stats.ranking.kd.rank} - {stats.ranking.kd.percentage}</p>
+                                        </div>
+                                        <div className="rankedStat">
+                                            <h1>Wins</h1>
+                                            <p>{stats.wins}</p>
+                                            <p className={`ranking ${stats.ranking.wins.class}`}>{stats.ranking.wins.rank} - {stats.ranking.wins.percentage}</p>
+                                        </div>
+                                        <div className="rankedStat">
+                                            <h1>Kills/Game</h1>
+                                            <p>{stats.killsPerGame}</p>
+                                            <p className={`ranking ${stats.ranking.killsPerGame.class}`}>{stats.ranking.killsPerGame.rank} - {stats.ranking.killsPerGame.percentage}</p>
+                                        </div>
+                                    </div>
 
-                                  <div className="statsBox">
-                                      <h1 className="statsTitle">
-                                          Weekly
-                                      </h1>
-                                      <div className="rankedStat">
-                                          <h1>K/D</h1>
-                                          <p><span>{stats.weekly.kd}{stats.weekly.kd > stats.kd && <FontAwesome 
-                        name='long-arrow-up'
-                        style={{ color: '#27ae60', 'fontSize': '21px', 'paddingLeft': '3px', 'paddingRight': '3px'}} />}{stats.weekly.kd < stats.kd && <FontAwesome 
-                          name='long-arrow-down'
-                          style={{ color: '#c0392b', 'fontSize': '21px', 'paddingLeft': '3px', 'paddingRight': '3px'}} />}</span></p>
-                                      </div>
-                                      <div className="rankedStat">
-                                          <h1>Kills</h1>
-                                          <p>{stats.weekly.kills}</p>
-                                      </div>
-                                      <div className="rankedStat">
-                                          <h1>Kills/Game</h1>
-                                          <p><span>{stats.weekly.killsPerGame}{stats.weekly.killsPerGame > stats.killsPerGame && <FontAwesome 
-                        name='long-arrow-up'
-                        style={{ color: '#27ae60', 'fontSize': '21px', 'paddingLeft': '3px', 'paddingRight': '3px'}} />}{stats.weekly.killsPerGame < stats.killsPerGame && <FontAwesome 
-                          name='long-arrow-down'
-                          style={{ color: '#c0392b', 'fontSize': '21px', 'paddingLeft': '3px', 'paddingRight': '3px'}} />}</span></p>
-                                      </div>
-                                  </div>
-                              </div>
-                          </div>
-                      </div>
-                  </div>
-              </div>
-              </DocumentTitle>
-          );
-      }
-  };
+                                    <div className="statsBox">
+                                        <h1 className="statsTitle">
+                                            Weekly
+                                        </h1>
+                                        <div className="rankedStat">
+                                            <h1>K/D</h1>
+                                            <p><span>{stats.weekly.kd}{stats.weekly.kd > stats.kd && <FontAwesome 
+                          name='long-arrow-up'
+                          style={{ color: '#27ae60', 'fontSize': '21px', 'paddingLeft': '3px', 'paddingRight': '3px'}} />}{stats.weekly.kd < stats.kd && <FontAwesome 
+                            name='long-arrow-down'
+                            style={{ color: '#c0392b', 'fontSize': '21px', 'paddingLeft': '3px', 'paddingRight': '3px'}} />}</span></p>
+                                        </div>
+                                        <div className="rankedStat">
+                                            <h1>Kills</h1>
+                                            <p>{stats.weekly.kills}</p>
+                                        </div>
+                                        <div className="rankedStat">
+                                            <h1>Kills/Game</h1>
+                                            <p><span>{stats.weekly.killsPerGame}{stats.weekly.killsPerGame > stats.killsPerGame && <FontAwesome 
+                          name='long-arrow-up'
+                          style={{ color: '#27ae60', 'fontSize': '21px', 'paddingLeft': '3px', 'paddingRight': '3px'}} />}{stats.weekly.killsPerGame < stats.killsPerGame && <FontAwesome 
+                            name='long-arrow-down'
+                            style={{ color: '#c0392b', 'fontSize': '21px', 'paddingLeft': '3px', 'paddingRight': '3px'}} />}</span></p>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                </DocumentTitle>
+            );
+        }
+    };
 }
 
-export default Stats;
+export default NewHome;

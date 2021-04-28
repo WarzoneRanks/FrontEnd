@@ -9,23 +9,23 @@ import {
 } from 'react-router-dom';
 
 
-class Favorites extends Component {
+class Recent extends Component {
 
     constructor(props) {
         super(props);
         this.state = {
           username: '',
           platform: '',
-          favorites: null,
+          recent: null,
           redirect: null
         };
     }
 
-    getFavorites = () => {
-        if (localStorage.getItem("favorites") != null) {
-            let cachedUsers = JSON.parse(localStorage.getItem("favorites"));
+    getRecents = () => {
+        if (localStorage.getItem("recent") != null) {
+            let cachedUsers = JSON.parse(localStorage.getItem("recent"));
             this.setState({
-                favorites: cachedUsers.favorites
+                recent: cachedUsers.recent
             });
         }
     }
@@ -38,8 +38,8 @@ class Favorites extends Component {
             favorites: null,
             redirect: null
         });
-        this.getFavorites();
-        setInterval(this.getFavorites, 1000);
+        this.getRecents();
+        setInterval(this.getRecents, 1000);
     }
 
     componentWillUnmount() {
@@ -75,17 +75,15 @@ class Favorites extends Component {
                 case "battle": 
                     return "battle-net";
                     break;
-                default:
-                    break;
             }
         }
 
         
 
-        if (this.state.favorites != null) {
-            return  this.state.favorites.map(function(o) {
+        if (this.state.recent != null) {
+            return  this.state.recent.map(function(o) {
                 return (
-                    <Link key={`${o.platform}/${o.username}`} to={`/stats/${o.platform}/${o.username}`}>
+                    <Link key={`${o.platform}/${o.username}`}  to={`/stats/${o.platform}/${o.username}`}>
                         <div className="favorite">
                             <p><i className={`fab fa-${getPlatformIcon(o.platform)}`}></i> {o.username.replace("%23", "#")}</p>
                         </div>
@@ -94,9 +92,8 @@ class Favorites extends Component {
             });
         } else {
             return (
-                <div className="pageError">
-                      <h3>You have no favorites!</h3>
-                      <p>Add some by clicking the <i className="far fa-star"></i> next to a users profile</p>
+                <div>
+                     
                 </div>
             );
         }
@@ -112,16 +109,14 @@ class Favorites extends Component {
             title = this.props.fromPage;
         }
         return (
-            <DocumentTitle className="page" title={`Warzone Stats - ${title}`}>
             <div className="page home" id="page">
-                <h1 className="pageTitle aboutPageTitle">Favorite Users</h1>
+                <h1 className="pageTitle aboutPageTitle">Recent Users</h1>
                 <div className="favorites">
                     {this.renderFavorites()}
                 </div>
             </div>
-            </DocumentTitle>
         );
     };
 }
 
-export default Favorites;
+export default Recent;

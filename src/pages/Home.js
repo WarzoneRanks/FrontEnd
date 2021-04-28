@@ -6,6 +6,7 @@ import { Container, Row, Col, Button, Form } from 'react-bootstrap';
 
 import Stats from './Stats';
 import Favorites from './Favorites';
+import NewHome from './NewHome'
 
 import {
     Link,
@@ -63,7 +64,7 @@ class Home extends Component {
 
     render() {
         if (this.state.redirect !== null) {
-            return <Redirect to={this.state.redirect} />
+            return <NewHome />
         }
         return (
             <DocumentTitle className="page" title='Warzone Stats - Home'>

@@ -15,12 +15,13 @@ export default class Matches extends React.Component {
             username: null,
             matches: null,
             isLoading: true,
-            error: null
+            error: null,
+            displayAlt: true
         }
 
         let baseURL = "https://app.warzoneranks.app";
 
-        if (process.env.NODE_ENV == "development") {
+        if (process.env.NODE_ENV == "development" || window.location.href.includes("beta.warzoneranks.app")) {
             baseURL = "https://aquarius.warzoneranks.app/dev";
         }
 
@@ -184,6 +185,12 @@ export default class Matches extends React.Component {
                 case "br_dmz_plndtrios":
                     newName = "Plunder Trios";
                 break;
+                case "br_dmz_plunquad":
+                    newName = "Plunder Quads";
+                break;
+                case "br_rebirth_resurgence_trios":
+                    newName="RS Trios"
+                break;
                 case "br_kingslayer_kingsltrios":
                     newName = "KS Trios"
                 break;
@@ -211,7 +218,7 @@ export default class Matches extends React.Component {
 
         }
 
-        return  this.state.matches.map(function(o) {
+        return  this.state.matches.map((o) => {
             if (o.mode.includes("br_br")) {
                 let rank = o.ranking.rank;
                 let rClass = o.ranking.class;
@@ -222,7 +229,7 @@ export default class Matches extends React.Component {
                     rClass = localMatch.ranking.class;
                 }
                 return (
-                    <Link to={`/match/${o.playerStats.teamPlacement}/${o.matchID}`}>
+                    <Link key={o.matchID} to={`/match/${o.playerStats.teamPlacement}/${o.matchID}`}>
                         <div className="stat match gray" id={"match-" + o.matchID}>
                             <div className="title">{convertGameName(o.mode)} <span className="date">{convertDate(o.utcStartSeconds)}</span></div>
                             <div className={isWin(o.playerStats.teamPlacement)}>{o.playerStats.teamPlacement}</div>
@@ -249,7 +256,7 @@ export default class Matches extends React.Component {
                 )
             } else {
                 return (
-                    <div className="stat match gray alt-match" id={"match-" + o.matchID}>
+                    <div key={o.matchID} className={`stat match gray alt-match display-${this.props.displayAlt}`} id={"match-" + o.matchID}>
                         <div className="title">{convertGameName(o.mode)} <span className="date">{convertDate(o.utcStartSeconds)}</span></div>
                         <div className={isWin(o.playerStats.teamPlacement)}>{o.playerStats.teamPlacement}</div>
                         <div className={`lobbyRank gray`}>NOT RANKED</div>

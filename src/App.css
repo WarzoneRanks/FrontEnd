@@ -1,7 +1,11 @@
 .header {
-  height: 100px;
+  height: 80px;
   width: 100vw;
-  background: #20262f;
+}
+
+
+.mainSection {
+  padding-left: 0px;
 }
 
 .logoText {
@@ -14,6 +18,99 @@
 
 .navLinks {
   margin-top: 0px;
+}
+
+.navMargin {
+  margin-top: 30px !important;
+}
+
+.searchForm {
+  margin: auto;
+  text-align: center;
+  width: 100%;
+}
+
+.input-group-text {
+  background: #242c37;
+  color: #ffffff57;
+  border: none;
+}
+
+.searchField {
+  margin-right: 0px !important;
+  background: #242C37;
+  border: transparent;
+  color: #fff;
+  outline: none;
+}
+
+.input-group {
+  width: 100% !important;
+}
+
+.searchField:focus, .searchField:active, .searchField:hover {
+  margin-right: 0px !important;
+  background: #242C37;
+  border: transparent;
+  color: #fff;
+  outline: none !important;
+  -webkit-appearance: none;
+  border-width: 0px;
+  outline:0; /* I have also tried outline:none */
+  -webkit-appearance:none;
+  box-shadow: none;
+  -moz-box-shadow: none;
+  -webkit-box-shadow: none;
+}
+
+.searchField:focus-within .input-group-text, .searchField:active .input-group-text {
+  color: #fff !important
+}
+
+.searchOptions {
+  background: #13181d;
+  z-index: 10 !important;
+  position: relative;
+  border-top: none;
+  border: 1px solid #242d37;
+  border-top: none;
+  border-radius: 0 0 5px 5px;
+  padding-top: 6px;
+  display: none;
+}
+
+.display-true {
+  display: block;
+}
+
+.display-false {
+  display: none;
+}
+
+.noOutline {
+  outline: none !important;
+}
+
+.searchOption {
+  padding: 5px;
+  cursor: pointer;
+}
+
+.searchOption:hover {
+  background: #00000061;
+}
+
+.searchOption h1 {
+  font-size: 16px;
+  text-align: left;
+  padding-left: 7px;
+  color: #ffffffc9;
+  padding-top: 5px;
+}
+
+.searchOption h1 i {
+  padding-right: 5px;
+  width: 20px;
 }
 
 
@@ -65,8 +162,11 @@ a.active p {
 }
 
 .aboutPageTitle {
-  margin-top: 25px;
-  font-size: 27px;
+  margin-top: 15px;
+  font-size: 16px;
+  color: #ffffffb0;
+  text-align: left;
+  padding: 0 30px;
 }
 
 .searchBoxContainer {
@@ -84,11 +184,13 @@ a.active p {
 .username {
   margin: auto;
   text-align: center;
-  margin-top: 25px;
-  font-size: 26px;
+  margin-top: 28px;
+  font-size: 19px;
   text-transform: uppercase;
   font-weight: bold;
   color: #fff;
+  padding: 10px;
+  padding-top: 14px;
 }
 
 .center {
@@ -113,7 +215,7 @@ a.active p {
   margin: auto;
   padding: 0 20px;
   text-align: center;
-  margin-top: 40px;
+  margin-top: 0px;
   border-radius: 5px;
 }
 
@@ -128,6 +230,8 @@ h1.sub {
 
 h1.sub.pad {
   padding-top: 30px;
+  text-align: left;
+  padding-left: 30px;
 }
 
 .m-h-130 {
@@ -211,7 +315,7 @@ h1.sub.pad {
 }
 
 .stat.gray {
-  background: #ffffff12;
+  background: #151a21;
 }
 
 .stat h1 {
@@ -496,6 +600,55 @@ h1.sub.pad {
   color: #1dafaf !important;
 }
 
+.statsBox {
+  background: #151a21;
+  border-radius: 5px;
+  margin: auto;
+  text-align: center;
+  margin-bottom: 20px;
+}
+
+.statsBox.first {
+  margin-top: -18px;
+}
+
+.statsBox .statsTitle {
+  font-size: 23px;
+  font-weight: 500;
+  text-align: left;
+  padding: 10px 30px;
+}
+
+.rankedStat {
+  border-top: 1px solid #ffffff14;
+  border-bottom: 1px solid #ffffff14;
+}
+
+.rankedStat h1 {
+  font-size: 18px;
+  text-align: left;
+  padding: 0px 30px;
+  padding-top: 12px;
+  font-weight: bold;
+}
+
+.rankedStat p {
+  font-size: 22px;
+  font-weight: bold;
+}
+
+p.ranking {
+  font-size: 15px;
+  font-weight: bold;
+  width: fit-content;
+  margin: auto;
+  text-align: center;
+  padding: 7px;
+  margin-bottom: 8px;
+  margin-top: -5px;
+  border-radius: 4px;
+}
+
 .matchStats {
   width: 65%;
   float: right;
@@ -562,13 +715,12 @@ h1.sub.pad {
   margin: auto;
   width: auto;
   margin-top: 30px;
-  margin: 30px 30px;
+  margin: 10px 30px;
 }
 
 .favorite {
-  background: #ffffff12;
   border-radius: 5px;
-  margin: 10px 30px;
+  margin: 10px 10px;
   text-align: unset;
   max-width: 530px;
   position: relative;
@@ -576,8 +728,9 @@ h1.sub.pad {
 }
 
 .favorite p {
-  font-size: 20px;
-  padding: 20px;
+  font-size: 17px;
+  padding: 10px;
+  text-align: left;
 }
 
 .favorite button {
@@ -609,14 +762,15 @@ a:hover {
 
 .userOptions {
   text-align: center;
-  margin-top: 30px;
+  margin-top: 10px;
+  height: 40px;
 }
 
 .makeHomeB {
-  font-size: 16px;
+  font-size: 14px;
   background: transparent;
   border: 2px solid #eb13ef;
-  padding: 8px;
+  padding: 5px;
   border-radius: 5px;
   margin: 5px;
   cursor: pointer;
@@ -632,10 +786,10 @@ a:hover {
 }
 
 .makeFav {
-  font-size: 16px;
+  font-size: 14px;
   background: transparent;
   border: 2px solid #ef9713;
-  padding: 8px;
+  padding: 5px;
   border-radius: 5px;
   margin: 5px;
   cursor: pointer;
@@ -649,13 +803,14 @@ a:hover {
 }
 
 .refreshTimer {
-  font-size: 13px;
+  font-size: 15px;
+  font-weight: bold;
   margin: auto;
   text-align: center;
-  margin-top: 20px;
-  margin-bottom: -25px;
+  margin-top: 0px;
+  margin-bottom: -5px;
   display: inline-block;
-  margin-left: 10px;
+  /* margin-left: 10px; */
 }
 
 .refreshTimer p {
@@ -677,6 +832,10 @@ a:hover {
   right: 20px;
   width: 140px;
   top: 29px;
+}
+
+.matchDifficulty {
+  margin-bottom: 20px;
 }
 
 .matchDifficulty .statRanking {
@@ -734,6 +893,10 @@ a:hover {
   text-transform: uppercase;
   font-weight: bold;
   color: #ffffff8c;
+}
+
+.mainStats .date {
+  padding-bottom: 10px;
 }
 
 .matchOption {
@@ -855,7 +1018,7 @@ a:hover {
 }
 
 .playersTable tr.top {
-  background: #333c46;
+  background: #161b20;
   border-radius: 5px;
   color: #ffffffc9;
 }
@@ -867,10 +1030,10 @@ a:hover {
 }
 
 .playersTable tr.playerT:nth-child(even) {
-  background: #242d38;
+  background: #1a2027;
 }
 .playersTable tr.playerT:nth-child(odd) {
-  background: #333c46;
+  background: #161b20;
 }
 
 tr.playerT {
@@ -888,7 +1051,7 @@ tr.playerT th {
   display: inline-block;
   width: 32px;
   margin-right: 5px;
-  background: #646769;
+  background: #32393e;
   height: 40px;
   border-radius: 2px;
   padding-top: 7px;

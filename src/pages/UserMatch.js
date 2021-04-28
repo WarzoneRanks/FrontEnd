@@ -25,7 +25,7 @@ class Match extends Component {
 
         let baseURL = "https://app.warzoneranks.app";
 
-        if (process.env.NODE_ENV == "development") {
+        if (process.env.NODE_ENV == "development" || window.location.href.includes("beta.warzoneranks.app")) {
             baseURL = "https://aquarius.warzoneranks.app/dev";
         }
 
@@ -168,7 +168,7 @@ class Match extends Component {
                         <tr className="playerT">
                             <th className="playerName"><div className={isWin(p.metadata.placement.value)}>{p.metadata.placement.value}</div> {p.metadata.platformUserHandle}</th>
                             <th>{p.stats.kills.value}</th>
-                            <th>{p.stats.kdRatio.displayValue} <span className="tag"><i class="fad fa-hourglass"></i></span></th>
+                            <th>{p.stats.kdRatio.displayValue}*</th>
                             <th>{p.stats.damageDone.value}</th>
                             <th>{p.stats.deaths.value}</th>
                             <th>{headshot.toFixed(2)}%</th>
@@ -215,7 +215,7 @@ class Match extends Component {
                     <tr className="playerT">
                         <th className="playerName"><div className={isWin(p.metadata.placement.value)}>{p.metadata.placement.value}</div> {p.metadata.platformUserHandle}</th>
                         <th>{p.stats.kills.value}</th>
-                        <th>{p.stats.kdRatio.displayValue} <span className="tag"><i class="fad fa-hourglass"></i></span></th>
+                        <th>{p.stats.kdRatio.displayValue}*</th>
                         <th>{p.stats.damageDone.value}</th>
                         <th>{p.stats.deaths.value}</th>
                         <th>{headshot.toFixed(2)}%</th>
@@ -419,6 +419,64 @@ class Match extends Component {
                     </div>
                 </div>
                 </DocumentTitle>
+            );
+        } else if (true) {
+            let pageName = `Warzone Stats - Match #${this.state.matchID}`;
+            return (
+            <DocumentTitle className="page"  title={pageName}>
+              <div className="page home" id="page">
+                  <div className="container-fluid">
+                      <div className="row">
+                          <div className="col-8">
+                              <div className="statsDiv ">
+                                    <h1 className="sub pad">Match Data</h1>
+                                  {this.renderMatchStats()}
+                              </div>
+                          </div>
+                          
+                          <div className="col-4">
+                              <div className="statsDiv">
+                                  <h1 className="sub pad">Match Details</h1>
+                                  <div className="statsBox">
+                                      <div className="mainStats">
+                                          <h1 className="username">{convertGameName(`${matchStats.mode}`)}</h1>
+                                          <h1 className="date">{convertDate(`${matchStats.start}`)}</h1>
+                                          <div className="matchOptions">
+                                            <div onClick={showPlayers} className={`matchOption ${playersActive}`}>Players</div>
+                                            <div onClick={showTeams} className={`matchOption ${teamActive}`}>Teams</div>
+                                        </div>
+                                      </div>
+                                  </div>
+                                  <div className={`stat matchDifficulty stat-bigger m-h-130 ${matchStats.ranking.class}`}>
+                                    <h1 className="mid statTitle">DIFFICULTY</h1>
+                                    <h1 className="mid statRanking">{matchStats.ranking.rank}</h1>
+                                    <div className="mid statDif"><div className={`percent ${matchStats.ranking.chart}`}></div></div>
+                                    <div className="bottom">{matchStats.ranking.percentage}</div>
+                                  </div>
+                                  <div className="statsBox">
+                                      <h1 className="statsTitle">
+                                          Ranking Details
+                                      </h1>
+                                      <div className="rankedStat">
+                                          <h1>Median K/D</h1>
+                                          <p>{matchStats.ranking.medianKD}</p>
+                                      </div>
+                                      <div className="rankedStat">
+                                          <h1>Average K/D</h1>
+                                          <p>{matchStats.ranking.averageKD}</p>
+                                      </div>
+                                      <div className="rankedStat">
+                                          <h1>Accuracy</h1>
+                                          <p>{matchStats.ranking.accuracy}%</p>
+                                      </div>
+                                  </div>
+                                  
+                              </div>
+                          </div>
+                      </div>
+                  </div>
+              </div>
+              </DocumentTitle>
             );
         } else {
             let pageName = `Warzone Stats - Match #${this.state.matchID}`;

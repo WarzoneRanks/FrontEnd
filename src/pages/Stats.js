@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 
 import DocumentTitle from 'react-document-title';
 
-import { Container, Row, Col, Button } from 'react-bootstrap';
+import { Container, Row, Col, Button, Alert } from 'react-bootstrap';
 import FontAwesome from 'react-fontawesome';
 import Matches from '../components/Matches';
 
@@ -437,6 +437,10 @@ class Stats extends Component {
             return (
                 <DocumentTitle className="page" title={pageName}>
                 <div className="page home" id="page">
+                    <div className="pageError">
+                      <p>This version of our site is outdated!</p>
+                      <p>Checkout the updated version <strong><a target="_blank" href="https://beta.warzoneranks.app">here</a></strong></p>
+                    </div>
                     <h1 className="username"><span className="level">{stats.level}</span> {username.replace("%23", "#")} 
                       <div className="refreshTimer">
                         <p><i className="far fa-clock"></i> {minutesLeft}:{ secondsLeft < 10 ? `0${ secondsLeft }` : secondsLeft }</p>

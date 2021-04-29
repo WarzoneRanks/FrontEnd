@@ -61,6 +61,10 @@ class Home extends Component {
         return (
             <DocumentTitle className="page" title='Warzone Stats - Home'>
             <div className="page home" id="page">
+                <div className="pageError">
+                    <p>This version of our site is outdated!</p>
+                    <p>Checkout the updated version <strong><a target="_blank" href="https://beta.warzoneranks.app">here</a></strong></p>
+                </div>
                 <Container className="searchBoxContainer">
                     <h1 className="pageTitle">Find a Player</h1>
                     <div class="searchBox">

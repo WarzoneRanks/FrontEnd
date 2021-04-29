@@ -39,6 +39,7 @@ class Recent extends Component {
             redirect: null
         });
         this.getRecents();
+        console.log(this.props);
         setInterval(this.getRecents, 1000);
     }
 

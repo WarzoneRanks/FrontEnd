@@ -27,12 +27,12 @@ function App() {
       <BrowserRouter>
             <Header />
             <div className="row">
-              <div className="col-3 statsDiv">
+              <div className="col-lg-3 col-md-12 col-12 hiddenMobile statsDiv">
                 <h1 className="sub pad">Players</h1>
                 <Favorites fromPage="Home" />
                 <Recent fromPage="Home" />
               </div>
-              <div className="col-9 mainSection">
+              <div className="col-lg-9 col-md-12 col-12 mainSection">
               <Switch>
                 <Route exact path="/" component={Home} />
                 <Route path="/stats/:platform/:username" component={Stats} />

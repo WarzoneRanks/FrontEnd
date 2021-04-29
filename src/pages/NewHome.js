@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 
 import DocumentTitle from 'react-document-title';
 
-import { Container, Row, Col, Button } from 'react-bootstrap';
+import { Container, Row, Col, Button, OverlayTrigger, Tooltip } from 'react-bootstrap';
 import FontAwesome from 'react-fontawesome';
 import Matches from '../components/Matches';
 
@@ -165,6 +165,8 @@ class NewHome extends Component {
                     var stats = {
                         timeGrabbed: Date.now(),
                         level: result.data.level,
+                        roles: result.data.roles,
+                        social: result.data.social,
                         kd: result.data.kd,
                         wins: result.data.wins,
                         gamesPlayed: result.data.gamesPlayed,
@@ -228,6 +230,8 @@ class NewHome extends Component {
                       timeGrabbed: Date.now(),
                       level: result.data.level,
                       kd: result.data.kd,
+                      roles: result.data.roles,
+                      social: result.data.social,
                       wins: result.data.wins,
                       gamesPlayed: result.data.gamesPlayed,
                       killsPerGame: result.data.killsPerGame,
@@ -453,6 +457,51 @@ class NewHome extends Component {
                 brActive = "active";
             }
         }
+
+        let userRoles = () => {
+          return  this.state.stats.roles.map((o) => {
+            if (o.roleID != 3) {
+              return (
+                <OverlayTrigger
+                  key={'owner'}
+                  placement={'top'}
+                  overlay={
+                    <Tooltip id={`tooltip-owner`}>
+                      <strong>{o.name}</strong>
+                    </Tooltip>
+                  }
+                >
+                  <div className={`siteRole ${o.class}`}>
+                    <i className={o.className}></i>
+                  </div>
+                </OverlayTrigger>
+              );
+            }
+          });
+        }
+
+        let verification = () => {
+          return  this.state.stats.roles.map((o) => {
+            if (o.roleID == 3) {
+              return (
+                <OverlayTrigger
+                  key={'owner'}
+                  placement={'top'}
+                  overlay={
+                    <Tooltip id={`tooltip-owner`}>
+                      <strong>{o.name}</strong>
+                    </Tooltip>
+                  }
+                >
+                  <div className={`${o.class}`}>
+                    <i className={o.className}></i>
+                  </div>
+                </OverlayTrigger>
+              );
+                }
+          });
+        }
+
         const { platform, username, error, stats, matches, isLoading, minutesLeft, secondsLeft} = this.state;
 
 
@@ -518,7 +567,7 @@ class NewHome extends Component {
                 <div className="page home" id="page">
                     <div className="container-fluid">
                         <div className="row">
-                            <div className="col-8">
+                            <div className="col-lg-8 col-md-8 col-12">
                                 <div className="statsDiv ">
                                     <h1 className="sub pad">Your Matches</h1>
                                     
@@ -526,12 +575,12 @@ class NewHome extends Component {
                                 </div>
                             </div>
                             
-                            <div className="col-4">
+                            <div className="col-lg-4 col-md-4 col-12">
                                 <div className="statsDiv">
                                     <h1 className="sub pad">Your Stats</h1>
                                     <div className="statsBox first">
                                         <div className="mainStats">
-                                            <h1 className="username">{username.replace("%23", "#")}</h1>
+                                            <h1 className="username">{userRoles()} {username.replace("%23", "#")} {verification()}</h1>
                                             <div className="userOptions">
                                                 <span onClick={makeHomeUser} className={`makeHomeB fav-${this.state.isHome}`}><i className="fal fa-home"></i>{this.state.homeText}</span>
                                                 <span onClick={makeFavoriteUser} className={`makeFav favo-${this.state.isFav}`}><i className="far fa-star"></i>{this.state.favText}</span>
@@ -593,6 +642,7 @@ class NewHome extends Component {
                                     </div>
                                 </div>
                             </div>
+                        
                         </div>
                     </div>
                 </div>

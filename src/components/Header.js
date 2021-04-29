@@ -39,7 +39,9 @@ class Header extends Component {
     }
 
     handleInputFocus = () => {
-        this.setState({ displaySearch: true });
+        if (this.state.username.length > 0) {
+            this.setState({ displaySearch: true });
+        }
     };
     
     handleInputBlur = () => {
@@ -49,6 +51,11 @@ class Header extends Component {
     };
 
     setUsername(e) {
+        if (e.target.value.length > 0) {
+            this.setState({ displaySearch: true });
+        } else {
+            this.setState({ displaySearch: false });
+        }
         this.setState({
             username: e.target.value
         });
@@ -110,7 +117,7 @@ class Header extends Component {
                             <div className="col-9 mainSection">
                                 <div className="container-fluid">
                                     <div className="row">
-                                        <div className="col-8">
+                                        <div className="col-lg-8 col-md-12 col-12">
                                             <div class="statsDiv navMargin">
                                                 <Form inline className="searchForm" onSubmit={this.redirectToPage.bind(this)}>
                                                     <InputGroup>
@@ -133,7 +140,7 @@ class Header extends Component {
                                                             <h1><i className="fab fa-playstation"></i> Search for <span className="searchTerm">{this.state.username}</span></h1>
                                                         </div>
                                                     </Link>
-                                                    <Link onClick={this.clearInput} className={`display-${this.state.displayHasHash}`} to={`/stats/battle/${this.state.username}`}>
+                                                    <Link onClick={this.clearInput} className={`display-${this.state.displayHasHash}`} to={`/stats/battle/${this.state.username.replace("#", "%23")}`}>
                                                         <div className="searchOption">
                                                             <h1><i className="fab fa-battle-net"></i> Search for <span className="searchTerm">{this.state.username}</span></h1>
                                                         </div>
@@ -141,7 +148,7 @@ class Header extends Component {
                                                 </div>
                                             </div>
                                         </div>
-                                        <div className="col-4">
+                                        <div className="col-lg-4">
 
                                         </div>
                                     </div>

@@ -230,7 +230,7 @@ class Match extends Component {
 
         if (this.state.displayOption == 0) {
             return (
-                <div>
+                <div className="matches">
                     <h1 className="sub pad">YOUR TEAM</h1>
                     <table className="playersTable">
                         <tr className="top">
@@ -420,21 +420,21 @@ class Match extends Component {
                 </div>
                 </DocumentTitle>
             );
-        } else if (true) {
+        } else {
             let pageName = `Warzone Stats - Match #${this.state.matchID}`;
             return (
             <DocumentTitle className="page"  title={pageName}>
               <div className="page home" id="page">
                   <div className="container-fluid">
                       <div className="row">
-                          <div className="col-8">
+                          <div className="col-lg-8 col-md-8 col-12">
                               <div className="statsDiv ">
                                     <h1 className="sub pad">Match Data</h1>
                                   {this.renderMatchStats()}
                               </div>
                           </div>
                           
-                          <div className="col-4">
+                          <div className="col-lg-4 col-md-4 col-12">
                               <div className="statsDiv">
                                   <h1 className="sub pad">Match Details</h1>
                                   <div className="statsBox">
@@ -477,59 +477,6 @@ class Match extends Component {
                   </div>
               </div>
               </DocumentTitle>
-            );
-        } else {
-            let pageName = `Warzone Stats - Match #${this.state.matchID}`;
-            return (
-                <DocumentTitle className="page" title={pageName}>
-                <div className="page home" id="page">
-                    <h1 className="username">{convertGameName(`${matchStats.mode}`)}</h1>
-                    <h1 className="date">{convertDate(`${matchStats.start}`)}</h1>
-                    <div className="statsDiv container-fluid">
-                      <Row>
-                        <div className="col-12 col-md-4 col-lg-4">
-                          <div className={`stat matchDifficulty stat-bigger m-h-130 ${matchStats.ranking.class}`}>
-                            <h1 className="mid statTitle">DIFFICULTY</h1>
-                            <h1 className="mid statRanking">{matchStats.ranking.rank}</h1>
-                            <div className="mid statDif"><div className={`percent ${matchStats.ranking.chart}`}></div></div>
-                            <div className="bottom">{matchStats.ranking.percentage}</div>
-                          </div>
-                        </div>
-                        <div className="col-12 col-md-8 col-lg-8">
-                            <div className="matchOptions">
-                                <div onClick={showPlayers} className={`matchOption ${playersActive}`}>Players</div>
-                                <div onClick={showTeams} className={`matchOption ${teamActive}`}>Teams</div>
-                            </div>
-                            <Row>
-                                <div className="col-12 col-md-4 col-lg-4">
-                                    <div className={`stat bigMatchStat m-h-130 gray`}>
-                                        <h1 className="mid statTitle">MEDIAN K/D</h1>
-                                        <h1 className="mid statRanking">{matchStats.ranking.medianKD}</h1>
-                                    </div>
-                                </div>
-                                <div className="col-12 col-md-4 col-lg-4">
-                                    <div className={`stat bigMatchStat m-h-130 gray`}>
-                                        <h1 className="mid statTitle">AVERAGE K/D</h1>
-                                        <h1 className="mid statRanking">{matchStats.ranking.averageKD}</h1>
-                                    </div>
-                                </div>
-                                <div className="col-12 col-md-4 col-lg-4">
-                                    <div className={`stat bigMatchStat m-h-130 gray`}>
-                                        <h1 className="mid statTitle">ACCURACY</h1>
-                                        <h1 className="mid statRanking">{matchStats.ranking.accuracy}%</h1>
-                                    </div>
-                                </div>
-                            </Row>
-                        </div>
-                        
-                      </Row>
-                      
-                      {this.renderMatchStats()}
-                      
-
-                    </div>
-                </div>
-                </DocumentTitle>
             );
         }
     };

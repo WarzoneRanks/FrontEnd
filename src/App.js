@@ -2,6 +2,7 @@ import './App.css';
 
 import Header from './components/Header';
 import { Container, Row, Col } from 'react-bootstrap';
+import toast, { Toaster } from 'react-hot-toast';
 
 import {
   BrowserRouter,
@@ -50,6 +51,11 @@ function App() {
               </div>
             </div>
       </BrowserRouter>
+      <Toaster position="bottom-center" toastOptions={{
+        style: {
+          color: '#000',
+        }
+      }}/>
     </div>
   );
 }

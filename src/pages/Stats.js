@@ -5,6 +5,7 @@ import DocumentTitle from 'react-document-title';
 import { Container, Row, Col, Button, OverlayTrigger, Tooltip } from 'react-bootstrap';
 import FontAwesome from 'react-fontawesome';
 import Matches from '../components/Matches';
+import toast from 'react-hot-toast';
 
 import {
     Link
@@ -44,7 +45,7 @@ class Stats extends Component {
         let baseURL = "https://app.warzoneranks.app";
 
         if (process.env.NODE_ENV == "development" || window.location.href.includes("beta.warzoneranks.app")) {
-          baseURL = "https://aquarius.warzoneranks.app/dev";
+          baseURL = "https://app.warzoneranks.app/dev";
         }
 
         this.baseURL = baseURL;
@@ -60,6 +61,122 @@ class Stats extends Component {
             this.setState({isHome: false, "homeText": " Mark as my profile"});
             console.log('is not home');
           }
+        }
+
+        if (localStorage.getItem("recent") != null) {
+          let recentUsersData = JSON.parse(localStorage.getItem("recent"));
+          let username = this.props.match.params.username;
+          let platform = this.props.match.params.platform;
+          let recentUsers = recentUsersData.recent;
+          let alreadyInList = false;
+          let indexOfUser = 0;
+          let counter = -1;
+          recentUsers.map(function (o) {
+            counter = counter + 1;
+            if (o.username == username && o.platform == platform) {
+              alreadyInList = true;
+              indexOfUser = counter;
+            }
+          });
+          if (alreadyInList) {
+            recentUsers.splice(indexOfUser, 1);
+            console.log("Trying to add " + {
+              username: username,
+              platform: platform
+            })
+            recentUsers.unshift({
+              username: username,
+              platform: platform
+            });
+            console.log("After adding: " + recentUsers);
+          } else {
+            if (recentUsers.length == 5) {
+              recentUsers.pop();
+            }
+            console.log("Trying to add " + {
+              username: username,
+              platform: platform
+            })
+            recentUsers.unshift({
+              username: username,
+              platform: platform
+            });
+            console.log("After adding: " + recentUsers);
+          }
+          let newRecentJson = {
+            recent: recentUsers
+          }
+          localStorage.setItem("recent", JSON.stringify(newRecentJson));
+        } else {
+          let username = this.props.match.params.username;
+          let platform = this.props.match.params.platform;
+          let recentUsers = [];
+          recentUsers.unshift({
+            username: username,
+            platform: platform
+          });
+          let newRecentJson = {
+            recent: recentUsers
+          }
+          localStorage.setItem("recent", JSON.stringify(newRecentJson));
+        }
+
+        if (localStorage.getItem("searches") != null) {
+          let searchUsersData = JSON.parse(localStorage.getItem("searches"));
+          let username = this.props.match.params.username;
+          let platform = this.props.match.params.platform;
+          let searchedUsers = searchUsersData.searches;
+          let alreadyInList = false;
+          let indexOfUser = 0;
+          let counter = -1;
+          searchedUsers.map(function (o) {
+            counter = counter + 1;
+            if (o.username == username && o.platform == platform) {
+              alreadyInList = true;
+              indexOfUser = counter;
+            }
+          });
+          if (alreadyInList) {
+            searchedUsers.splice(indexOfUser, 1);
+            console.log("Trying to add " + {
+              username: username,
+              platform: platform
+            })
+            searchedUsers.unshift({
+              username: username,
+              platform: platform
+            });
+            console.log("After adding: " + searchedUsers);
+          } else {
+            if (searchedUsers.length == 100) {
+              searchedUsers.pop();
+            }
+            console.log("Trying to add " + {
+              username: username,
+              platform: platform
+            })
+            searchedUsers.unshift({
+              username: username,
+              platform: platform
+            });
+            console.log("After adding: " + searchedUsers);
+          }
+          let newSearchedJson = {
+            searches: searchedUsers
+          }
+          localStorage.setItem("searches", JSON.stringify(newSearchedJson));
+        } else {
+          let username = this.props.match.params.username;
+          let platform = this.props.match.params.platform;
+          let searchedUsers = [];
+          searchedUsers.unshift({
+            username: username,
+            platform: platform
+          });
+          let newSearchedJson = {
+            searches: searchedUsers
+          }
+          localStorage.setItem("searches", JSON.stringify(newSearchedJson));
         }
 
         if (localStorage.getItem("favorites") != null) {
@@ -350,6 +467,7 @@ class Stats extends Component {
           if (this.state.isHome) {
             localStorage.removeItem('favoriteUser');
             this.setState({isHome: false, homeText: " Mark as my profile"});
+            toast.success("No longer marked as your profile");
           } else {
             let favoriteUser = {
               username: this.state.username,
@@ -357,6 +475,7 @@ class Stats extends Component {
             };
             localStorage.setItem('favoriteUser', JSON.stringify(favoriteUser));
             this.setState({isHome: true, homeText: ""});
+            toast.success("Marked as your profile");
           
           }
         }
@@ -385,6 +504,7 @@ class Stats extends Component {
               localStorage.removeItem("favorites");
             }
             this.setState({isFav: false, favText: " Favorite"});
+            toast.success("Removed from favorites");
           } else {
             if (localStorage.getItem("favorites") != null) {
               let cachedUsers = JSON.parse(localStorage.getItem("favorites"));
@@ -411,6 +531,7 @@ class Stats extends Component {
               localStorage.setItem("favorites", JSON.stringify(newJson));
             }
             this.setState({isFav: true, favText: ""});
+            toast.success("Added to favorites");
           }
         }
 

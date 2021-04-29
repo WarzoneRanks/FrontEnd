@@ -3,6 +3,18 @@
   width: 100vw;
 }
 
+.react-toast-notifications__toast--success {
+  background-color: #6fa3f1 !important;
+}
+
+.react-toast-notifications__toast__icon-wrapper {
+  background-color: #6fa3f1 !important;
+}
+
+.react-toast-notifications__toast__content {
+  color: #fff !important;
+}
+
 
 .mainSection {
   padding-left: 0px;
@@ -734,6 +746,20 @@ p.ranking {
   font-size: 17px;
   padding: 10px;
   text-align: left;
+  margin-bottom: 5px;
+}
+
+p.dropdownSubtext {
+  color: #ffffff8c;
+  text-align: left;
+  padding-left: 10px;
+  margin-bottom: 5px;
+}
+
+.dropdownSubtext span {
+  font-weight: 600;
+  color: #ffffffad;
+  cursor: pointer;
 }
 
 .favorite button {

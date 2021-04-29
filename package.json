@@ -15,9 +15,12 @@
     "react-document-title": "^2.0.3",
     "react-dom": "^17.0.1",
     "react-fontawesome": "^1.7.1",
+    "react-hot-toast": "^1.0.2",
+    "react-iifc": "^1.0.0",
     "react-router-dom": "^5.2.0",
     "react-scripts": "4.0.1",
     "react-table": "^7.6.3",
+    "react-toast-notifications": "^2.4.4",
     "web-vitals": "^0.2.4"
   },
   "scripts": {

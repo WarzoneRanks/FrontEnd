@@ -57,7 +57,7 @@ class NewHome extends Component {
         let baseURL = "https://app.warzoneranks.app";
 
         if (process.env.NODE_ENV == "development" || window.location.href.includes("beta.warzoneranks.app")) {
-          baseURL = "https://aquarius.warzoneranks.app/dev";
+          baseURL = "https://app.warzoneranks.app/dev";
         }
 
         this.baseURL = baseURL;

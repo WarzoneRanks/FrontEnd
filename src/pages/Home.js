@@ -68,35 +68,29 @@ class Home extends Component {
         }
         return (
             <DocumentTitle className="page" title='Warzone Stats - Home'>
-            <div className="page home" id="page">
-                <Container className="searchBoxContainer">
-                    <h1 className="pageTitle">Find a Player</h1>
-                    <div class="searchBox">
-                        <Form onSubmit={this.redirectToPage.bind(this)}>
-                            <Form.Row>
-                                    <Form.Group as={Col} xs={12} s={12} md={8} lg={8} controlId="formGridUsername">
-                                    <Form.Label>Username</Form.Label>
-                                    <Form.Control onChange={ this.setUsername.bind(this) } value={this.state.username} type="user" placeholder="Enter username" />
-                                    </Form.Group>
+           <div className="page home" id="page">
+                  <div className="container-fluid">
+                      <div className="row">
+                          <div className="col-lg-8 col-md-8 col-12">
+                              <div className="statsDiv">
+                                <div className="welcomeDiv ">
+                                    <h1 className="pageTitle">Welcome to WZ Ranks Beta!</h1>
+                                    <h1 className="subTitle">First Steps</h1>
+                                    <p>The first step is marking your profile as your home page! Use the search bar above to find your profile and click "Mark as my profile". </p>
+                                    <p>Once you've done this you will have your profile on your home page and you'll be able to use WZ Ranks just as before.</p>
 
-                                    <Form.Group as={Col} controlId="formGridPlatform">
-                                        <Form.Label>Platform</Form.Label>
-                                        <Form.Control as="select" onChange={ this.setPlatform.bind(this) } defaultValue="xbl">
-                                            <option value="xbl">Xbox</option>
-                                            <option value="psn">Playstation</option>
-                                            <option value="battle">Battle.net</option>
-                                        </Form.Control>
-                                    </Form.Group>
-                            </Form.Row>
-                            <div className="formButtonSearch">
-                                <Button variant="primary" type="search">
-                                    Search
-                                </Button>
+                                    <h1 className="subTitle">What's new?</h1>
+                                    <p>We've added a whole bunch of new features including recent profiles, search history, display options, verified players, and much more.</p>
+                                    <p>Please keep in mind this is only the beta stages and we are open to feedback, you can give us feedback by joining our discord.</p>
+                                    
+                                </div>
+                              </div>
                             </div>
-                        </Form>
+                            <div className="col-lg-4 col-md-4 col-12">
+
+                            </div>
+                        </div>
                     </div>
-                </Container>
-                <Favorites fromPage="Home" />
             </div>
             </DocumentTitle>
         );

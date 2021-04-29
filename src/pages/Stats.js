@@ -671,7 +671,7 @@ class Stats extends Component {
                       <div className="row">
                           <div className="col-lg-8 col-md-8 col-12">
                               <div className="statsDiv ">
-                                  <h1 className="sub pad">{username.replace("%23", "#")}'s Matches</h1>
+                                  <h1 className="sub pad">Matches</h1>
                                   <FontAwesome 
                                       name='spinner-third'
                                       spin
@@ -687,7 +687,7 @@ class Stats extends Component {
                           
                           <div className="col-lg-4 col-md-4 col-12">
                               <div className="statsDiv">
-                                  <h1 className="sub pad">{username.replace("%23", "#")}'s Stats</h1>
+                                  <h1 className="sub pad">Stats</h1>
                                   <div className="statsBox">
                                       <div className="mainStats">
                                           <h1 className="username">{username.replace("%23", "#")}</h1>
@@ -715,7 +715,7 @@ class Stats extends Component {
                       <div className="row">
                           <div className="col-lg-8 col-md-8 col-12">
                               <div className="statsDiv ">
-                                  <h1 className="sub pad">{username.replace("%23", "#")}'s Matches</h1>
+                                  <h1 className="sub pad">Matches</h1>
                                   
                                   <Matches displayAlt={this.state.displayOption} platform={platform} username={username}></Matches>
                               </div>
@@ -723,7 +723,7 @@ class Stats extends Component {
                           
                           <div className="col-lg-4 col-md-4 col-12">
                               <div className="statsDiv">
-                                  <h1 className="sub pad">{username.replace("%23", "#")}'s Stats</h1>
+                                  <h1 className="sub pad">Stats</h1>
                                   <div className="statsBox first">
                                       <div className="mainStats">
                                           <h1 className="username">{userRoles()} {username.replace("%23", "#")} {verification()}</h1>

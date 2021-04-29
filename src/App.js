@@ -21,6 +21,7 @@ import Famous from './pages/Famous';
 import Recent from './pages/Recent';
 import UserMatch from './pages/UserMatch';
 import NewHome from './pages/NewHome';
+import Social from './pages/Social';
 
 function App() {
   return (
@@ -32,6 +33,7 @@ function App() {
                 <h1 className="sub pad">Players</h1>
                 <Favorites fromPage="Home" />
                 <Recent fromPage="Home" />
+                <Social fromPage="Home" />
               </div>
               <div className="col-lg-9 col-md-12 col-12 mainSection">
               <Switch>

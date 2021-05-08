@@ -62,7 +62,7 @@ class Match extends Component {
               (result) => {
                 if (!result.error) {
                     let playersCounted = result.data.ranking.players;
-                    let accuracy = (playersCounted / 115) * 100;
+                    let accuracy = (playersCounted / 150) * 100;
                     let newPlayers = result.data.allPlayers;
                     let medianKD = Number.parseFloat(result.data.ranking.averageKD);
                     let averageKD = Number.parseFloat(result.data.ranking.averageKD_avg);

@@ -1,6 +1,12 @@
 .header {
   height: 80px;
-  width: 100vw;
+  width: 100%;
+}
+
+.App {
+  max-width: 1440px;
+  text-align: center;
+  margin: auto;
 }
 
 .react-toast-notifications__toast--success {
@@ -13,6 +19,20 @@
 
 .react-toast-notifications__toast__content {
   color: #fff !important;
+}
+
+::-webkit-scrollbar {
+  width: 0;  /* Remove scrollbar space */
+  background: transparent;  /* Optional: just make scrollbar invisible */
+}
+
+.matches {
+  -ms-overflow-style: none;  /* Internet Explorer 10+ */
+  scrollbar-width: none;  /* Firefox */
+}
+
+.matches::-webkit-scrollbar { 
+  display: none;  /* Safari and Chrome */
 }
 
 

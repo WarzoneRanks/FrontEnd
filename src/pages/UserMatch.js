@@ -190,12 +190,16 @@ class Match extends Component {
 
         }
 
-        return this.state.matchStats.allPlayers.map(function(p) {
+        let players = this.state.matchStats.allPlayers;
+        players.sort((a, b) => (a.metadata.placement.value > b.metadata.placement.value) ? 1 : -1)
+
+        return players.map(function(p) {
             if (p.attributes.lifeTimeStats != null) {
                 let headshot = (p.stats.headshots.value / p.stats.kills.value) * 100;
                 if (Number.isNaN(headshot)) {
                     headshot = 0.00;
                 }
+                
                 return (
                     <tr className="playerT">
                         <th className="playerName"><div className={isWin(p.metadata.placement.value)}>{p.metadata.placement.value}</div> {p.metadata.platformUserHandle}</th>

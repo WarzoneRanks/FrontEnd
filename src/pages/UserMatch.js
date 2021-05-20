@@ -99,13 +99,21 @@ class Match extends Component {
               // instead of a catch() block so that we don't swallow
               // exceptions from actual bugs in components.
               (error) => {
+                console.log(error)
                 this.setState({
-                  error,
+                  error: "An error has occured with the API, please try again later",
                   isLoading: false
                 });
                 console.log(error);
               }
-            );
+            )
+            .catch((error) => {
+                console.log(error)
+                this.setState({
+                  error: error,
+                  isLoading: false
+                });
+            });
 
     }
 
